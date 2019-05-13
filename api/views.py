@@ -4,91 +4,91 @@ from rest_framework import generics
 
 class NyteUserList(generics.ListCreateAPIView):
     queryset = models.NyteUser.objects.all()
-    serializerClass = serializers.NyteUserSerializer
+    serializer_class = serializers.NyteUserSerializer
 
-class NyteUserDetail(generics.CreateAPIView):
+class NyteUserDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.NyteUser.objects.all()
-    serializerClass = serializers.NyteUserSerializer
+    serializer_class = serializers.NyteUserSerializer
 
 class AccountList(generics.ListCreateAPIView):
     queryset = models.Account.objects.all()
-    serializerClass = serializers.AccountSerializer
+    serializer_class = serializers.AccountSerializer
 
-class AccountDetail(generics.CreateAPIView):
+class AccountDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Account.objects.all()
-    serializerClass = serializers.AccountSerializer
+    serializer_class = serializers.AccountSerializer
 
 class AccountInformationList(generics.ListCreateAPIView):
     queryset = models.AccountInformation.objects.all()
-    serializerClass = serializers.AccountInformationSerializer
+    serializer_class = serializers.AccountInformationSerializer
 
-class AccountInformationDetail(generics.CreateAPIView):
+class AccountInformationDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.AccountInformation.objects.all()
-    serializerClass = serializers.AccountInformationSerializer
+    serializer_class = serializers.AccountInformationSerializer
 
 class EventList(generics.ListCreateAPIView):
     queryset = models.Event.objects.all()
-    serializerClass = serializers.EventSerializer
+    serializer_class = serializers.EventSerializer
 
-class EventDetail(generics.CreateAPIView):
+class EventDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Event.objects.all()
-    serializerClass = serializers.EventSerializer
+    serializer_class = serializers.EventSerializer
 
 class IdentityList(generics.ListCreateAPIView):
     queryset = models.Identity.objects.all()
-    serializerClass = serializers.IdentitySerializer
+    serializer_class = serializers.IdentitySerializer
 
-class IdentityDetail(generics.CreateAPIView):
+class IdentityDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Identity.objects.all()
-    serializerClass = serializers.IdentitySerializer
+    serializer_class = serializers.IdentitySerializer
 
 class MenuItemList(generics.ListCreateAPIView):
     queryset = models.MenuItem.objects.all()
-    serializerClass = serializers.MenuItemSerializer
+    serializer_class = serializers.MenuItemSerializer
 
-class MenuItemDetail(generics.CreateAPIView):
+class MenuItemDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.MenuItem.objects.all()
-    serializerClass = serializers.MenuItemSerializer
+    serializer_class = serializers.MenuItemSerializer
 
 class SpecialList(generics.ListCreateAPIView):
     queryset = models.Special.objects.all()
-    serializerClass = serializers.SpecialSerializer
+    serializer_class = serializers.SpecialSerializer
 
-class SpecialDetail(generics.CreateAPIView):
+class SpecialDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Special.objects.all()
-    serializerClass = serializers.SpecialSerializer
+    serializer_class = serializers.SpecialSerializer
 
 class TransactionList(generics.ListCreateAPIView):
     queryset = models.Transaction.objects.all()
-    serializerClass = serializers.TransactionSerializer
+    serializer_class = serializers.TransactionSerializer
 
-class TransactionDetail(generics.CreateAPIView):
+class TransactionDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Transaction.objects.all()
-    serializerClass = serializers.TransactionSerializer
+    serializer_class = serializers.TransactionSerializer
 
 class UserSessionList(generics.ListCreateAPIView):
     queryset = models.UserSession.objects.all()
-    serializerClass = serializers.UserSessionSerializer
+    serializer_class = serializers.UserSessionSerializer
 
-class UserSessionDetail(generics.CreateAPIView):
+class UserSessionDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.UserSession.objects.all()
-    serializerClass = serializers.UserSessionSerializer
+    serializer_class = serializers.UserSessionSerializer
 
 class VenueList(generics.ListCreateAPIView):
     queryset = models.Venue.objects.all()
-    serializerClass = serializers.VenueSerializer
+    serializer_class = serializers.VenueSerializer
 
-class VenueDetail(generics.CreateAPIView):
+class VenueDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Venue.objects.all()
-    serializerClass = serializers.VenueSerializer
+    serializer_class = serializers.VenueSerializer
 
 class WorksAtList(generics.ListCreateAPIView):
     queryset = models.WorksAt.objects.all()
-    serializerClass = serializers.WorksAtSerializer
+    serializer_class = serializers.WorksAtSerializer
 
-class WorksAtDetail(generics.CreateAPIView):
+class WorksAtDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.WorksAt.objects.all()
-    serializerClass = serializers.WorksAtSerializer
+    serializer_class = serializers.WorksAtSerializer
 
 
 

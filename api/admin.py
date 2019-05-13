@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import NyteUser
 from .forms import NyteUserChangeForm, NyteUserCreationForm
+from . import models
 
 class NyteUserAdmin(UserAdmin):
     add_form = NyteUserCreationForm
@@ -24,3 +25,13 @@ class NyteUserAdmin(UserAdmin):
 
 # Register your models here.
 admin.site.register(NyteUser, NyteUserAdmin)
+admin.site.register(models.Account)
+admin.site.register(models.AccountInformation)
+admin.site.register(models.Event)
+admin.site.register(models.Identity)
+admin.site.register(models.MenuItem)
+admin.site.register(models.Special)
+admin.site.register(models.Transaction)
+admin.site.register(models.UserSession)
+admin.site.register(models.Venue)
+admin.site.register(models.WorksAt)
