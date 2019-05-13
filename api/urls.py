@@ -25,4 +25,5 @@ urlpatterns = [
     path('Venue/<int:pk>', views.VenueList.as_view()),
     path('WorksAt/', views.WorksAtDetail.as_view()),
     path('WorksAt/<int:pk>', views.WorksAtList.as_view()),
+    path('Login/', drf_views.obtain_auth_token),
 ]
