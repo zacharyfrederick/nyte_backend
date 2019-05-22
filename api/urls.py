@@ -26,4 +26,5 @@ urlpatterns = [
     path('WorksAt/', views.WorksAtList.as_view()),
     path('WorksAt/<int:pk>', views.WorksAtDetail.as_view()),
     path('Login/', drf_views.obtain_auth_token),
+    path('CreateNyteUser/', views.CreateNyteUser.as_view())
 ]

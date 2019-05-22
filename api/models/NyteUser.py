@@ -2,7 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext as _
 from django.db import models
 from .WorksAt import WorksAt
-from ..managers import CustomUserManager
+from ..managers import NyteUserManager
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
@@ -20,7 +20,7 @@ class NyteUser(AbstractUser):
         ("BA", "Bartender"),
     )
 
-    birthday = models.DateField(blank=False, null=True)
+    birthday = models.DateField(blank=True, null=True)
     user_type = models.CharField(max_length=100, blank=False, null=False, choices=USER_TYPE)
     is_age_verified = models.BooleanField(default=False, blank=False, null=False)
     is_email_verified = models.BooleanField(default=False, blank=False, null=False)
@@ -33,4 +33,4 @@ class NyteUser(AbstractUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-    objects = CustomUserManager()
+    objects = NyteUserManager()
