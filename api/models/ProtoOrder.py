@@ -4,7 +4,8 @@ order_status_choices = (
     ("or", "Ordered"),
     ("ma", "Making"),
     ("re", "Ready"),
-    ("pi", "Picked up")
+    ("pi", "Picked up"),
+    ("li", "Liquor")
 )
 
 class ProtoOrder(models.Model):
