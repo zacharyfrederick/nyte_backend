@@ -9,3 +9,5 @@ from .Transaction import Transaction
 from .UserSession import UserSession
 from .Venue import Venue
 from .WorksAt import WorksAt
+from .ProtoMenuItem import ProtoMenuItem
+from .ProtoOrder import ProtoOrder

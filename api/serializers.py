@@ -55,3 +55,13 @@ class UserSessionSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.UserSession
         fields = "__all__"
+
+class ProtoMenuItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ProtoMenuItem
+        fields = "__all__"
+
+class ProtoOrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.ProtoOrder
+        fields = "__all__"
