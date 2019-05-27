@@ -6,6 +6,7 @@ item_choices = (
     ("wi", "Wine"),
     ("co", "Cocktail"),
     ("so", "Soda"),
+    ("li", "Liquor")
 )
 
 class ProtoMenuItem(models.Model):
