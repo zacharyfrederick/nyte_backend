@@ -26,5 +26,9 @@ urlpatterns = [
     path('WorksAt/', views.WorksAtList.as_view()),
     path('WorksAt/<int:pk>', views.WorksAtDetail.as_view()),
     path('Login/', drf_views.obtain_auth_token),
-    path('CreateNyteUser/', views.CreateNyteUser.as_view())
+    path('CreateNyteUser/', views.CreateNyteUser.as_view()),
+    path('ProtoMenuItem/', views.ProtoMenuItemList.as_view()),
+    path('ProtoMenuItem/<int:pk>', views.ProtoMenuItemDetail.as_view()),
+    path('ProtoOrder/', views.ProtoOrderList.as_view()),
+    path('ProtoOrder/<int:pk>', views.ProtoOrderDetail.as_view()),
 ]

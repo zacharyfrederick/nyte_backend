@@ -111,8 +111,18 @@ class WorksAtDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.WorksAt.objects.all()
     serializer_class = serializers.WorksAtSerializer
 
+class ProtoMenuItemList(generics.ListCreateAPIView):
+    queryset = models.ProtoMenuItem.objects.all()
+    serializer_class = serializers.ProtoMenuItemSerializer
 
+class ProtoMenuItemDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.ProtoMenuItem.objects.all()
+    serializer_class = serializers.ProtoMenuItemSerializer
 
+class ProtoOrderList(generics.ListCreateAPIView):
+    queryset = models.ProtoOrder.objects.all()
+    serializer_class = serializers.ProtoOrderSerializer
 
-
-
+class ProtoOrderDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.ProtoOrder.objects.all()
+    serializer_class = serializers.ProtoOrderSerializer
