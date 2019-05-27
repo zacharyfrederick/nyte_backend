@@ -38,8 +38,8 @@ admin.site.register(models.WorksAt)
 
 @admin.register(models.ProtoMenuItem)
 class ProtoMenuAdmin(admin.ModelAdmin):
-    list_display = {"name", "type"}
+    list_display = ("name", "type")
 
 @admin.register(models.ProtoOrder)
 class ProtoOrderAdmin(admin.ModelAdmin):
-    list_display = {"first_name", "last_name", "phone_num", "status"}
+    list_display = ("first_name", "last_name", "phone_num", "status")
