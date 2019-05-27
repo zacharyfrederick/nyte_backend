@@ -35,5 +35,11 @@ admin.site.register(models.Transaction)
 admin.site.register(models.UserSession)
 admin.site.register(models.Venue)
 admin.site.register(models.WorksAt)
-admin.site.register(models.ProtoMenuItem)
-admin.site.register(models.ProtoOrder)
+
+@admin.register(models.ProtoMenuItem)
+class ProtoMenuAdmin(admin.ModelAdmin):
+    list_display = {"name", "type"}
+
+@admin.register(models.ProtoOrder)
+class ProtoOrderAdmin(admin.ModelAdmin):
+    list_display = {"first_name", "last_name", "phone_num", "status"}

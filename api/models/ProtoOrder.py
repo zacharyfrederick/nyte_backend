@@ -13,3 +13,4 @@ class ProtoOrder(models.Model):
     phone_num = models.CharField(max_length=20, null=False, blank=False)
     status = models.CharField(max_length=100, null=False, blank=False, default="or", choices=order_status_choices)
     
+    
