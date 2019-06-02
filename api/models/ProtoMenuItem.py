@@ -15,4 +15,4 @@ class ProtoMenuItem(models.Model):
     image_url = models.URLField(max_length=200)
 
     def __str__(self):
-        return name;
+        return self.name;

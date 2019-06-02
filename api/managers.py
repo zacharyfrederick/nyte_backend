@@ -1,5 +1,70 @@
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
+import requests
+from collections import namedtuple
+from twilio.rest import Client
+
+TokenResponse_t = namedtuple("TokenResponse_t", "id, access_token, refresh_interval")
+TokenValidation_t = namedtuple("TokenValidation_t", "id, number, app_id")
+
+class TwilioManager():
+    def send_sms_message(self, to_num, msg):
+        client = Client(settings.TWILIO_ACCOUNT_SID, TWILI_AUTH_TOKEN)
+        message = client.create(to_num, settings.TWILIO_FROM_NUM, msg);
+
+class FacebookManager():
+    RAW_TOKEN_REQUEST_URL = "https://graph.accountkit.com/v1.3/access_token?grant_type=authorization_code&code={}&access_token=AA|{}|{}"
+    RAW_ACCESS_TOKEN_URL = "https://graph.accountkit.com/v1.3/me/?access_token={}"
+
+    def create_token_request_url(self, auth_code):
+        return self.RAW_TOKEN_REQUEST_URL.format(auth_code, settings.FACEBOOK_APP_ID, settings.FACEBOOK_APP_SECRET)
+    
+    def create_access_token_url(self, access_token):
+        return self.RAW_ACCESS_TOKEN_URL.format(access_token)
+
+    def read_token_request_json(self, json):
+        return TokenResponse_t(id=json['id'], access_token=json['access_token'], refresh_interval=json['refresh_interval'])
+
+    def read_token_val_json(self, json):
+        return TokenValidation_t(id=json['id'], phone=json['phone']['number'], app_id=json['application']['id'])
+
+    def interpret_json(self, request, json_method):
+        try:
+            json = request.json()
+            if "error" not in json:
+                return json_method(json)
+            else:
+                return None
+        except ValueError:
+            return None
+
+    def send_request(self, auth_code=None, access_token=None):
+        formnatted_url = None
+        json_method = None
+
+        if auth_code != None and access_token != None:
+            return None
+
+        if auth_code != None:
+            formatted_url = self.create_token_request_url(auth_code)
+            json_method = read_token_request_json
+
+        if access_token != None:
+            formatted_url = self.create_access_token_url(access_token)
+            json_method = read_token_val_json
+
+        try:
+            request = requests.get(url=formatted_url)
+            response = self.interpret_json(request, json_method)
+        except:
+            return None
+
+        if response != None:
+            return response
+        else:
+            return None
+
 
 
 class NyteUserManager(BaseUserManager):

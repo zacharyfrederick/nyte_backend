@@ -5,6 +5,12 @@ from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from . import forms
+from datetime import datetime
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import facebook
+import json
+from .managers import FacebookManager, TokenValidation_t, TokenResponse_t
 
 class CreateNyteUser(APIView):
     def post(self, request, format=None):
@@ -126,3 +132,22 @@ class ProtoOrderList(generics.ListCreateAPIView):
 class ProtoOrderDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.ProtoOrder.objects.all()
     serializer_class = serializers.ProtoOrderSerializer
+
+def login_view(request):
+    if request.method == "POST":
+        try:
+            auth_code = request.POST['authorization_code']
+            fb_manager = FacebookManager()
+            access_token_resp = fb_manager.send_request(auth_code=auth_code)
+            
+            if access_token_resp != None:
+                return JsonResponse({
+                    "id": access_token_resp.id,
+                    "access_token": access_token_resp.access_token,
+                    "refresh_interval": access_token_resp.refresh_interval})
+            else:
+                return JsonResponse({"error": "invalid credentials supplied"})
+        except KeyError:
+            return JsonResponse({"error": "authorization_code not supplied"}, safe=False)
+    else:
+        return JsonResponse({"error": "only POST allowed to this url"})

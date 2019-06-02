@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.utils.translation import gettext as _
 from django.db import models
 from .WorksAt import WorksAt
@@ -7,12 +7,8 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 from django.conf import settings
+from django.utils import timezone
 
-@receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_auth_token(sender,instance=None, created=False, **kwargs):
-    if created:
-        Token.objects.create(user=instance)
-    
 class NyteUser(AbstractUser):
     USER_TYPE = (
         ("PA", "Patron"),
@@ -28,6 +24,15 @@ class NyteUser(AbstractUser):
     public_key = models.CharField(max_length=500, blank=True, null=True)
     private_key = models.CharField(max_length=2000, blank=True, null=True)
     email = models.EmailField(_('email address'), unique=True)
+    date_joined = models.DateTimeField(('date joined'), default=timezone.now)
+    first_name = models.CharField(('first name'), max_length=30, null=True)
+    last_name = models.CharField(('last name'), max_length=50, null=True)
+    middle_name = models.CharField(
+        max_length=64, verbose_name=('middle name'), blank=True)
+    phone = models.CharField(max_length=64, verbose_name=('user phone'), null=True)
+    facebook_id = models.CharField(max_length=200, unique=True, null=True)
+    profile_image = models.CharField(max_length=300, blank=True)
+    gender = models.CharField(max_length=10, blank=True)
     username = None
 
     USERNAME_FIELD = 'email'

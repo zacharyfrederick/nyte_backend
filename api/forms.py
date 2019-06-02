@@ -3,11 +3,11 @@ from .models import NyteUser
 
 
 class NyteUserCreationForm(UserCreationForm):
-    class Meta(UserCreationForm):
+    class Meta:
         model = NyteUser
-        fields = ('email', 'birthday',)
+        fields = "__all__"
 
 class NyteUserChangeForm(UserChangeForm):
-    class Meta(UserChangeForm):
+    class Meta:
         model = NyteUser
-        fields = ('email', 'birthday', )
+        fields = "__all__"

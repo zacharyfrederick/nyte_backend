@@ -10,3 +10,5 @@ class Venue(models.Model):
     image = models.CharField(max_length=100) #TODO: install pillow and change to image field
     markup_fee = models.FloatField(null=True, blank=True)
     
+    def __str__(self):
+        return self.name;

@@ -31,4 +31,5 @@ urlpatterns = [
     path('ProtoMenuItem/<int:pk>', views.ProtoMenuItemDetail.as_view()),
     path('ProtoOrder/', views.ProtoOrderList.as_view()),
     path('ProtoOrder/<int:pk>', views.ProtoOrderDetail.as_view()),
+    path('FacebookLogin/', views.login_view),
 ]

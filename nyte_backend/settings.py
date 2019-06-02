@@ -26,7 +26,7 @@ SECRET_KEY = '!7w4cqjl!s)a$kx@vsy4%wy8q9ii1y9lbf8^@#gprb_+k7kapn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -146,5 +146,14 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication', #debug purposes only
     ],
 }
+
+#facebook auth settings
+FACEBOOK_APP_ID = '2135369323179432'
+FACEBOOK_APP_SECRET = '5ec3d6f70405ddde44602e959627e19c'
+
+#twilio auth settings
+TWILIO_ACCOUNT_SID = "AC422f24dc82bfa93152575ddb69d1d2ec"
+TWILIO_AUTH_TOKEN = "9852d9a25123abcc7aa73998b033807c"
+TWILIO_FROM_NUM = ""
 
 django_heroku.settings(locals())
