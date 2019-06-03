@@ -12,6 +12,7 @@ import facebook
 import json
 from .managers import FacebookManager
 
+#might need to delete this idk if we will use it
 class CreateNyteUser(APIView):
     def post(self, request, format=None):
         form = forms.NyteUserCreationForm(request.POST)
