@@ -2,6 +2,7 @@ from . import models
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
+from django.conf import settings
 
 @receiver(pre_save, sender=models.ProtoOrder)
 def proto_order_pre_save(sender, **kwargs):

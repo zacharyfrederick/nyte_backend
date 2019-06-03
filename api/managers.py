@@ -5,12 +5,22 @@ import requests
 from collections import namedtuple
 from twilio.rest import Client
 
-TokenResponse_t = namedtuple("TokenResponse_t", "id, access_token, refresh_interval")
-TokenValidation_t = namedtuple("TokenValidation_t", "id, number, app_id")
+class TokenRequestResponse():
+    def __init__(self, id, access_token, refresh_interval):
+        self.id = id
+        self.access_token = access_token
+        self.refresh_interval = refresh_interval
+
+class TokenValidationRespose:
+    def __init__(self,id, phone,app_id):
+        self.id = id
+        self.phone = phone
+        self.app_id = app_id
+
 
 class TwilioManager():
     def send_sms_message(self, to_num, msg):
-        client = Client(settings.TWILIO_ACCOUNT_SID, TWILI_AUTH_TOKEN)
+        client = Client(settings.TWILIO_ACCOUNT_SID, settings.TWILI_AUTH_TOKEN)
         message = client.create(to_num, settings.TWILIO_FROM_NUM, msg);
 
 class FacebookManager():
@@ -24,46 +34,41 @@ class FacebookManager():
         return self.RAW_ACCESS_TOKEN_URL.format(access_token)
 
     def read_token_request_json(self, json):
-        return TokenResponse_t(id=json['id'], access_token=json['access_token'], refresh_interval=json['refresh_interval'])
+        return TokenRequestResponse(json['id'], json['access_token'], json['token_refresh_interval_sec'])
 
     def read_token_val_json(self, json):
-        return TokenValidation_t(id=json['id'], phone=json['phone']['number'], app_id=json['application']['id'])
+        return TokenValidationRespose(json['id'], json['phone']['number'], json['application']['id'])
 
     def interpret_json(self, request, json_method):
         try:
             json = request.json()
             if "error" not in json:
-                return json_method(json)
+                response = json_method(json)
+                return response
             else:
+                print("Error in json")
                 return None
         except ValueError:
             return None
 
     def send_request(self, auth_code=None, access_token=None):
-        formnatted_url = None
+        formatted_url = None
         json_method = None
 
-        if auth_code != None and access_token != None:
+        if auth_code is not None and access_token is not None:
             return None
 
-        if auth_code != None:
+        if auth_code is not None:
             formatted_url = self.create_token_request_url(auth_code)
-            json_method = read_token_request_json
+            json_method = self.read_token_request_json
 
-        if access_token != None:
+        if access_token is not None:
             formatted_url = self.create_access_token_url(access_token)
-            json_method = read_token_val_json
+            json_method = self.read_token_val_json
 
-        try:
-            request = requests.get(url=formatted_url)
-            response = self.interpret_json(request, json_method)
-        except:
-            return None
-
-        if response != None:
-            return response
-        else:
-            return None
+        request = requests.get(url=formatted_url)
+        response = self.interpret_json(request, json_method)
+        return response
 
 
 

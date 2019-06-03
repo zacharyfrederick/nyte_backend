@@ -10,7 +10,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import facebook
 import json
-from .managers import FacebookManager, TokenValidation_t, TokenResponse_t
+from .managers import FacebookManager
 
 class CreateNyteUser(APIView):
     def post(self, request, format=None):
@@ -133,6 +133,7 @@ class ProtoOrderDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.ProtoOrder.objects.all()
     serializer_class = serializers.ProtoOrderSerializer
 
+@csrf_exempt
 def login_view(request):
     if request.method == "POST":
         try:
@@ -140,7 +141,7 @@ def login_view(request):
             fb_manager = FacebookManager()
             access_token_resp = fb_manager.send_request(auth_code=auth_code)
             
-            if access_token_resp != None:
+            if access_token_resp is not None:
                 return JsonResponse({
                     "id": access_token_resp.id,
                     "access_token": access_token_resp.access_token,
