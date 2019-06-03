@@ -143,8 +143,11 @@ AUTH_USER_MODEL = 'api.NyteUser'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.BasicAuthentication', #debug purposes only
     ],
+
+    'DEFAULT_PERMISSION_CLASSES': [
+        #'rest_framework.permissions.IsAuthenticated',
+    ]
 }
 
 #facebook auth settings

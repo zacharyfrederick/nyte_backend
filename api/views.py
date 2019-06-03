@@ -11,6 +11,8 @@ from django.views.decorators.csrf import csrf_exempt
 import facebook
 import json
 from .managers import FacebookManager
+from rest_framework.permissions import IsAuthenticated
+from .authentication import NyteAuthentication
 
 #might need to delete this idk if we will use it
 class CreateNyteUser(APIView):
@@ -103,6 +105,7 @@ class UserSessionDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.UserSessionSerializer
 
 class VenueList(generics.ListCreateAPIView):
+    authentication_classes = (NyteAuthentication,)
     queryset = models.Venue.objects.all()
     serializer_class = serializers.VenueSerializer
 
@@ -136,6 +139,7 @@ class ProtoOrderDetail(generics.RetrieveUpdateDestroyAPIView):
 
 @csrf_exempt
 def login_view(request):
+    print(request.body)
     if request.method == "POST":
         try:
             new_user = False

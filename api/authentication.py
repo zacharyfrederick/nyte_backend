@@ -1,18 +1,20 @@
 from rest_framework import authentication
+import json
+
 
 class NyteAuthentication(authentication.TokenAuthentication):
     def authenticate(self, request):
-        auth = get_authorization_header(request).split()
+        print(request.body)
+
+        auth = authentication.get_authorization_header(request).split()
 
         if not auth or auth[0].lower() != self.keyword.lower().encode():
             return None
-
-        print(auth[2])
         
         if len(auth) == 1:
             msg = _('Invalid token header. No credentials provided.')
             raise exceptions.AuthenticationFailed(msg)
-        elif len(auth) > 3:
+        elif len(auth) > 2:
             msg = _('Invalid token header. Token string should not contain spaces.')
             raise exceptions.AuthenticationFailed(msg)
 
