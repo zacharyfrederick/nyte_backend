@@ -6,8 +6,8 @@ from collections import namedtuple
 from twilio.rest import Client
 
 class TokenRequestResponse():
-    def __init__(self, id, access_token, refresh_interval):
-        self.id = id
+    def __init__(self, user_id, access_token, refresh_interval):
+        self.id = user_id
         self.access_token = access_token
         self.refresh_interval = refresh_interval
 
@@ -26,6 +26,10 @@ class TwilioManager():
 class FacebookManager():
     RAW_TOKEN_REQUEST_URL = "https://graph.accountkit.com/v1.3/access_token?grant_type=authorization_code&code={}&access_token=AA|{}|{}"
     RAW_ACCESS_TOKEN_URL = "https://graph.accountkit.com/v1.3/me/?access_token={}"
+    RAW_LOGOUT_URL = "https://graph.accountkit.com/v1.3/logout?access_token={}"
+
+    def create_logout_url(self, access_token):
+        return self.RAW_LOGOUT_URL.format(access_token)
 
     def create_token_request_url(self, auth_code):
         return self.RAW_TOKEN_REQUEST_URL.format(auth_code, settings.FACEBOOK_APP_ID, settings.FACEBOOK_APP_SECRET)
@@ -39,6 +43,9 @@ class FacebookManager():
     def read_token_val_json(self, json):
         return TokenValidationRespose(json['id'], json['phone']['number'], json['application']['id'])
 
+    def read_logout_json(self, json):
+        return json 
+
     def interpret_json(self, request, json_method):
         try:
             json = request.json()
@@ -46,27 +53,35 @@ class FacebookManager():
                 response = json_method(json)
                 return response
             else:
-                print("Error in json")
+                print(json)
                 return None
         except ValueError:
             return None
 
-    def send_request(self, auth_code=None, access_token=None):
+    def send_request(self, auth_code=None, access_token=None, logout=None):
         formatted_url = None
         json_method = None
 
-        if auth_code is not None and access_token is not None:
+        if auth_code is not None and access_token is not None and logout is not None:
             return None
 
         if auth_code is not None:
             formatted_url = self.create_token_request_url(auth_code)
             json_method = self.read_token_request_json
 
-        if access_token is not None:
+        if access_token is not None and logout is None:
             formatted_url = self.create_access_token_url(access_token)
             json_method = self.read_token_val_json
+        
+        if logout is True:
+            formatted_url = self.create_logout_url(access_token)
+            json_method = self.read_logout_json
 
-        request = requests.get(url=formatted_url)
+        if logout is None:
+            request = requests.get(url=formatted_url)
+        elif logout is True:
+            request = requests.post(url=formatted_url)
+            
         response = self.interpret_json(request, json_method)
         return response
 

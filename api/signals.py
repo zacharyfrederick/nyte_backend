@@ -8,7 +8,8 @@ from django.conf import settings
 def proto_order_pre_save(sender, **kwargs):
     proto_order = kwargs.get("instance")
     if proto_order.should_msg_be_sent():
-        proto_order.send_msg()
+        #proto_order.send_msg()
+        pass
         
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def create_auth_token(sender,instance=None, created=False, **kwargs):

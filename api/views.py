@@ -137,18 +137,36 @@ class ProtoOrderDetail(generics.RetrieveUpdateDestroyAPIView):
 def login_view(request):
     if request.method == "POST":
         try:
+            new_user = False
             auth_code = request.POST['authorization_code']
             fb_manager = FacebookManager()
             access_token_resp = fb_manager.send_request(auth_code=auth_code)
-            
             if access_token_resp is not None:
-                return JsonResponse({
-                    "id": access_token_resp.id,
-                    "access_token": access_token_resp.access_token,
-                    "refresh_interval": access_token_resp.refresh_interval})
+                if models.NyteUser.objects.filter(facebook_id=access_token_resp.id).exists():
+                    nyte_user = models.NyteUser.objects.get(facebook_id=access_token_resp.id)
+                else:
+                    new_user = True
+                    nyte_user = models.NyteUser.objects.create(facebook_id=access_token_resp.id)
+                return nyte_user.login_json_response(access_token_resp.access_token, new_user)
             else:
-                return JsonResponse({"error": "invalid credentials supplied"})
+                return JsonResponse({"error": "invalid credentials supplied"}, safe=False)
         except KeyError:
             return JsonResponse({"error": "authorization_code not supplied"}, safe=False)
+    else:
+        return JsonResponse({"error": "only POST allowed to this url"}, safe=False)
+
+@csrf_exempt
+def fb_logout_view(request):
+    if request.method == "POST":
+        try:
+            access_token = request.POST['access_token']
+            fb_manager = FacebookManager()
+            request_resp = fb_manager.send_request(access_token=access_token, logout=True)
+            if request_resp is not None:
+                return JsonResponse(request_resp, safe=False)
+            else:
+                return JsonResponse({"error": "an error occurred"})
+        except KeyError:
+            return JsonResponse({"error": "no access_token supplied"})
     else:
         return JsonResponse({"error": "only POST allowed to this url"})
