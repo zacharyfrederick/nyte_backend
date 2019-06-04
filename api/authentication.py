@@ -1,10 +1,19 @@
 from rest_framework import authentication
 import json
-
+from .managers import FacebookManager
+from django.utils.translation import gettext_lazy as _
+from rest_framework import exceptions
 
 class NyteAuthentication(authentication.TokenAuthentication):
     def authenticate(self, request):
-        print(request.body)
+        fb_manager = FacebookManager()
+        access_token = json.loads(request.body)['access_token']
+        
+        token_val_resp = fb_manager.send_request(access_token=access_token)
+        
+        if token_val_resp is None:
+            msg = _('Facebook access_token invalid. User is logged out')
+            raise exceptions.AuthenticationFailed(msg)
 
         auth = authentication.get_authorization_header(request).split()
 

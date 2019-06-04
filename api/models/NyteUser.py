@@ -34,6 +34,7 @@ class NyteUser(AbstractUser):
     facebook_id = models.CharField(max_length=200, unique=True, null=True)
     profile_image = models.CharField(max_length=300, blank=True, null=True)
     gender = models.CharField(max_length=10, blank=True, null=True)
+    is_verified = models.BooleanField(default=False, blank=True)
     username = None
 
     USERNAME_FIELD = 'email'
@@ -47,5 +48,6 @@ class NyteUser(AbstractUser):
             "user_id": self.id,
             "nyte_token": token.key,
             "access_token": access_token,
+            "is_verified": self.is_verified,
             "new_user": new_user
         })

@@ -105,7 +105,6 @@ class UserSessionDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.UserSessionSerializer
 
 class VenueList(generics.ListCreateAPIView):
-    authentication_classes = (NyteAuthentication,)
     queryset = models.Venue.objects.all()
     serializer_class = serializers.VenueSerializer
 
@@ -159,11 +158,11 @@ def login_view(request):
     else:
         return JsonResponse({"error": "only POST allowed to this url"}, safe=False)
 
-@csrf_exempt
+@csrf_expemt
 def fb_logout_view(request):
     if request.method == "POST":
         try:
-            access_token = request.POST['access_token']
+            access_token = json.loads(request.body)['access_token']
             fb_manager = FacebookManager()
             request_resp = fb_manager.send_request(access_token=access_token, logout=True)
             if request_resp is not None:
