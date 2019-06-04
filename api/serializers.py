@@ -4,7 +4,7 @@ from . import models
 class NyteUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.NyteUser
-        fields = "__all__"
+        exclude = ("password",)
 
 class VenueSerializer(serializers.ModelSerializer):
     class Meta:
@@ -64,4 +64,9 @@ class ProtoMenuItemSerializer(serializers.ModelSerializer):
 class ProtoOrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.ProtoOrder
+        fields = "__all__"
+
+class VerificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Verification
         fields = "__all__"

@@ -42,12 +42,11 @@ class NyteUser(AbstractUser):
 
     objects = NyteUserManager()
 
-    def login_json_response(self, access_token, new_user):
+    def login_json_response(self, access_token):
         token = Token.objects.get(user=self.id)
         return JsonResponse({
             "user_id": self.id,
             "nyte_token": token.key,
             "access_token": access_token,
             "is_verified": self.is_verified,
-            "new_user": new_user
         })

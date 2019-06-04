@@ -60,6 +60,7 @@ admin.site.register(models.Transaction)
 admin.site.register(models.UserSession)
 #admin.site.register(models.Venue)
 admin.site.register(models.WorksAt)
+admin.site.register(models.Verification)
 
 @admin.register(models.ProtoMenuItem)
 class ProtoMenuAdmin(admin.ModelAdmin):

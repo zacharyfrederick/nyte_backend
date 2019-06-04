@@ -136,6 +136,14 @@ class ProtoOrderDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.ProtoOrder.objects.all()
     serializer_class = serializers.ProtoOrderSerializer
 
+class VerificationCreation(generics.CreateAPIView):
+    queryset = models.Verification.objects.all()
+    serializer_class = serializers.VerificationSerializer
+
+class VerificationUpdate(generics.UpdateAPIView):
+    queryset = models.Verification.objects.all()
+    serializer_class = serializers.VerificationSerializer
+
 @csrf_exempt
 def login_view(request):
     if request.method == "POST":
@@ -148,9 +156,8 @@ def login_view(request):
                 if models.NyteUser.objects.filter(facebook_id=access_token_resp.id).exists():
                     nyte_user = models.NyteUser.objects.get(facebook_id=access_token_resp.id)
                 else:
-                    new_user = True
                     nyte_user = models.NyteUser.objects.create(facebook_id=access_token_resp.id)
-                return nyte_user.login_json_response(access_token_resp.access_token, new_user)
+                return nyte_user.login_json_response(access_token_resp.access_token)
             else:
                 return JsonResponse({"error": "invalid credentials supplied"}, safe=False)
         except KeyError:

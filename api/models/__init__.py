@@ -11,3 +11,4 @@ from .Venue import Venue
 from .WorksAt import WorksAt
 from .ProtoMenuItem import ProtoMenuItem
 from .ProtoOrder import ProtoOrder
+from .Verification import Verification
