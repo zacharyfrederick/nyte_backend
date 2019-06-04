@@ -139,11 +139,10 @@ class ProtoOrderDetail(generics.RetrieveUpdateDestroyAPIView):
 
 @csrf_exempt
 def login_view(request):
-    print(json.loads(request.body))
     if request.method == "POST":
         try:
             new_user = False
-            auth_code = request.POST['authorization_code']
+            auth_code = json.loads(request.body)['authorization_code']
             fb_manager = FacebookManager()
             access_token_resp = fb_manager.send_request(auth_code=auth_code)
             if access_token_resp is not None:
