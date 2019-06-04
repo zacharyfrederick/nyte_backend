@@ -158,7 +158,7 @@ def login_view(request):
     else:
         return JsonResponse({"error": "only POST allowed to this url"}, safe=False)
 
-@csrf_expemt
+@csrf_exempt
 def fb_logout_view(request):
     if request.method == "POST":
         try:
