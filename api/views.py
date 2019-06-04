@@ -139,7 +139,7 @@ class ProtoOrderDetail(generics.RetrieveUpdateDestroyAPIView):
 
 @csrf_exempt
 def login_view(request):
-    print(json.load(request.body))
+    print(json.loads(request.body))
     if request.method == "POST":
         try:
             new_user = False
