@@ -6,8 +6,12 @@ from rest_framework import exceptions
 
 class NyteAuthentication(authentication.TokenAuthentication):
     def authenticate(self, request):
-        fb_manager = FacebookManager()
-        access_token = json.loads(request.body)['access_token']
+        try:
+            fb_manager = FacebookManager()
+            access_token = json.loads(request.body)['access_token']
+        except KeyError:
+            msg = _('Invalid facebook token. No Credentials provided')
+            raise exceptions.AuthenticationFailed(msg)
         
         token_val_resp = fb_manager.send_request(access_token=access_token)
         
