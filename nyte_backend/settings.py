@@ -152,14 +152,18 @@ REST_FRAMEWORK = {
 }
 
 #facebook auth settings
-#FACEBOOK_APP_ID = '2319283855026340' personal account kit testing
+#FACEBOOK_APP_ID = '2319283855026340' #personal account kit testing
 FACEBOOK_APP_ID = '2135369323179432' #kyles account kit testing
-#FACEBOOK_APP_SECRET = '0d09b9bac681e1634e31f6c4b8f68a24' personal account kit testing
+#FACEBOOK_APP_SECRET = '0d09b9bac681e1634e31f6c4b8f68a24' #personal account kit testing
 FACEBOOK_APP_SECRET = '5ec3d6f70405ddde44602e959627e19c' #kyles account kit testing
 
 #twilio auth settings
 TWILIO_ACCOUNT_SID = "AC422f24dc82bfa93152575ddb69d1d2ec"
 TWILIO_AUTH_TOKEN = "9852d9a25123abcc7aa73998b033807c"
 TWILIO_FROM_NUM = ""
+
+#Age checker settings
+AGE_CHECKER_API_KEY = "xmTU0wA12zFhg2mZmiQ0ookNoSUZ68S4"
+AGE_CHECKER_SECRET = "yqKqNATKU00yA1ie"
 
 django_heroku.settings(locals())

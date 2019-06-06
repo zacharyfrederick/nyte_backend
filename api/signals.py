@@ -15,3 +15,10 @@ def proto_order_pre_save(sender, **kwargs):
 def create_auth_token(sender,instance=None, created=False, **kwargs):
     if created:
         Token.objects.create(user=instance)
+        
+@receiver(pre_save, sender=models.Verification)
+def attempt_to_verifiy(sender, **kwargs):
+        verification_obj = kwargs.get("instance")
+        if verification_obj.attempted_to_verify == False:
+                verification_obj.attempt_to_verify()
+

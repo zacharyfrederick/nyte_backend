@@ -17,9 +17,7 @@ class NyteUserAdmin(UserAdmin):
         "facebook_id",
         "gender",
         'user_type',  
-        'birthday', 
-        'is_age_verified', 
-        'is_email_verified')
+        'is_verified')
     list_filter = ('user_type', 'is_staff', 'is_active',)
     fieldsets = (
         ("User Data", {'fields': 
@@ -34,15 +32,13 @@ class NyteUserAdmin(UserAdmin):
         "gender",
         'user_type', 
         'membership', 
-        'birthday', 
-        'is_age_verified', 
-        'is_email_verified')}),
+        'is_verified')}),
         ('Permissions', {'fields': ('is_staff', 'is_active')}),
     )
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2', 'user_type', 'birthday', 'is_age_verified', 'is_email_verified','is_staff', 'is_active')}
+            'fields': ('email', 'password1', 'password2', 'user_type', 'is_verified','is_staff', 'is_active')}
         ),
     )
     search_fields = ('email',)

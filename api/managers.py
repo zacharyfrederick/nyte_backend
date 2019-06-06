@@ -4,19 +4,43 @@ from django.conf import settings
 import requests
 from collections import namedtuple
 from twilio.rest import Client
+from .helpers import TokenRequestResponse, TokenValidationResponse, AgeCheckerResponse
 
-class TokenRequestResponse():
-    def __init__(self, user_id, access_token, refresh_interval):
-        self.id = user_id
-        self.access_token = access_token
-        self.refresh_interval = refresh_interval
+class AgeCheckerManager():
+    VERIFICATION_URL = "https://api.agechecker.net/v1/create"
+    DEFAULT_COUNTRY = "US"
 
-class TokenValidationRespose:
-    def __init__(self,id, phone,app_id):
-        self.id = id
-        self.phone = phone
-        self.app_id = app_id
-
+    def build_request_data(self, verification):
+        data = {
+            "key": "xmTU0wA12zFhg2mZmiQ0ookNoSUZ68S4",
+            "secret": "yqKqNATKU00yA1ie",
+            "data": {
+                "address": verification.addr,
+                "city": verification.city,
+                "country": self.DEFAULT_COUNTRY,
+                "dob_day": verification.dob_day,
+                "dob_month": verification.dob_month,
+                "dob_year": verification.dob_year,
+                "first_name": verification.first_name,
+                "last_name": verification.last_name,
+                "state": verification.state,
+                "zip": verification.zipcode
+            }
+        }
+        return data
+        
+    def interpret_json(self, response):
+        try:
+            json = response.json()
+            if "error" not in json:
+                return AgeCheckerResponse(uuid=json['uuid'], status=json['status'])
+            else:
+                return AgeCheckerResponse(error_msg=json['error']['message'], error_code=json['error']['code'])
+        except ValueError:
+            return None
+            
+    def attempt_to_verify(self, verification):
+        return self.interpret_json(requests.post(url=self.VERIFICATION_URL, json=self.build_request_data(verification)))
 
 class TwilioManager():
     def send_sms_message(self, to_num, msg):
@@ -41,7 +65,7 @@ class FacebookManager():
         return TokenRequestResponse(json['id'], json['access_token'], json['token_refresh_interval_sec'])
 
     def read_token_val_json(self, json):
-        return TokenValidationRespose(json['id'], json['phone']['number'], json['application']['id'])
+        return TokenValidationResponse(json['id'], json['phone']['number'], json['application']['id'])
 
     def read_logout_json(self, json):
         return json 
@@ -84,8 +108,6 @@ class FacebookManager():
             
         response = self.interpret_json(request, json_method)
         return response
-
-
 
 class NyteUserManager(BaseUserManager):
     """

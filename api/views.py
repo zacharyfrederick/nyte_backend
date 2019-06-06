@@ -136,7 +136,7 @@ class ProtoOrderDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.ProtoOrder.objects.all()
     serializer_class = serializers.ProtoOrderSerializer
 
-class VerificationCreation(generics.CreateAPIView):
+class VerificationCreation(generics.ListCreateAPIView):
     queryset = models.Verification.objects.all()
     serializer_class = serializers.VerificationSerializer
 
@@ -156,7 +156,11 @@ def login_view(request):
                 if models.NyteUser.objects.filter(facebook_id=access_token_resp.id).exists():
                     nyte_user = models.NyteUser.objects.get(facebook_id=access_token_resp.id)
                 else:
-                    nyte_user = models.NyteUser.objects.create(facebook_id=access_token_resp.id)
+                    access_token_val_resp = fb_manager.send_request(access_token=access_token_resp.access_token)
+                    if access_token_val_resp is not None:
+                        nyte_user = models.NyteUser.objects.create(facebook_id=access_token_resp.id, phone=access_token_val_resp.phone)
+                    else:
+                        nyte_user = models.NyteUser.objects.create(facebook_id=access_token_resp.id)
                 return nyte_user.login_json_response(access_token_resp.access_token)
             else:
                 return JsonResponse({"error": "invalid credentials supplied"}, safe=False)

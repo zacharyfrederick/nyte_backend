@@ -17,7 +17,9 @@ class NyteUser(AbstractUser):
         ("BA", "Bartender"),
     )
 
-    birthday = models.DateField(blank=True, null=True)
+    dob_day = models.CharField(max_length=100, default="")
+    dob_month = models.CharField(max_length=100, default="")
+    dob_year = models.CharField(max_length=100, default="")
     user_type = models.CharField(max_length=100, blank=False, null=True, choices=USER_TYPE, default="PA")
     is_age_verified = models.BooleanField(default=False, blank=False, null=False)
     is_email_verified = models.BooleanField(default=False, blank=False, null=False)
@@ -50,3 +52,12 @@ class NyteUser(AbstractUser):
             "access_token": access_token,
             "is_verified": self.is_verified,
         })
+
+    def update_verification_info(self, verification):
+        self.first_name = verification.first_name
+        self.last_name = verification.last_name
+        self.dob_day = verification.dob_day
+        self.dob_month = verification.dob_month
+        self.dob_year = verification.dob_year
+        self.is_verified = True
+        self.save()
