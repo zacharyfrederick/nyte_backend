@@ -56,7 +56,10 @@ admin.site.register(models.Transaction)
 admin.site.register(models.UserSession)
 #admin.site.register(models.Venue)
 admin.site.register(models.WorksAt)
-admin.site.register(models.Verification)
+
+@admin.register(models.Verification)
+class VerificationAdmin(admin.ModelAdmin):
+    list_display=("user", "first_name", "last_name", "uuid", "status", "error_code", "error_msg")
 
 @admin.register(models.ProtoMenuItem)
 class ProtoMenuAdmin(admin.ModelAdmin):
