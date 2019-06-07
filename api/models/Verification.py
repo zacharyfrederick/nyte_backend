@@ -11,7 +11,7 @@ class Verification(models.Model):
     user = models.OneToOneField(NyteUser, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100, default="")
     last_name = models.CharField(max_length=100, default="")
-    email = models.CharField(max_length=100, default="")
+    verif_email = models.CharField(max_length=100, default="")
     dob_day = models.CharField(max_length=100, default="")
     dob_month = models.CharField(max_length=100, default="")
     dob_year = models.CharField(max_length=100, default="")
