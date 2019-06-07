@@ -59,6 +59,6 @@ class NyteUser(AbstractUser):
         self.dob_day = verification.dob_day
         self.dob_month = verification.dob_month
         self.dob_year = verification.dob_year
-        self.email = verification.verif_email
+        self.email = verification.email
         self.is_verified = True
         self.save()
