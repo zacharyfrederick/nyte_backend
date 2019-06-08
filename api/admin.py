@@ -17,7 +17,8 @@ class NyteUserAdmin(UserAdmin):
         "facebook_id",
         "gender",
         'user_type',  
-        'is_verified')
+        'is_verified'
+        'id_image')
     list_filter = ('user_type', 'is_staff', 'is_active',)
     fieldsets = (
         ("User Data", {'fields': 
