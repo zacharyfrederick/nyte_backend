@@ -39,7 +39,7 @@ class NyteUser(AbstractUser):
     profile_image = models.CharField(max_length=300, blank=True, null=True)
     gender = models.CharField(max_length=10, blank=True, null=True)
     is_verified = models.BooleanField(default=False, blank=True)
-    id_image = models.ImageField();
+    id_image = models.ImageField(null=True);
 
     username = None
 
@@ -71,7 +71,7 @@ class NyteUser(AbstractUser):
     def save_base_64_image(self, verification):
         file_name_raw = "images/{}_{}_id.jpg"
         file_name_formatted = file_name_raw(verification.last_name, verification.first_name)
-        file = open(file_name_formatted), "rb")
+        file = open(file_name_formatted, "rb")
         file.write(base64.decodebytes(verification.image_data))
         django_file = File(file)
         self.id_image.save(file_name_formatted, django_file)
