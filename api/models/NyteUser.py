@@ -9,6 +9,8 @@ from rest_framework.authtoken.models import Token
 from django.conf import settings
 from django.utils import timezone
 from django.http import JsonResponse
+import base64
+from django.core.files import File
 
 class NyteUser(AbstractUser):
     USER_TYPE = (
@@ -37,6 +39,8 @@ class NyteUser(AbstractUser):
     profile_image = models.CharField(max_length=300, blank=True, null=True)
     gender = models.CharField(max_length=10, blank=True, null=True)
     is_verified = models.BooleanField(default=False, blank=True)
+    id_image = models.ImageField();
+
     username = None
 
     USERNAME_FIELD = 'email'
@@ -54,6 +58,7 @@ class NyteUser(AbstractUser):
         })
 
     def update_verification_info(self, verification):
+        self.save_base_64_image(verification)
         self.first_name = verification.first_name
         self.last_name = verification.last_name
         self.dob_day = verification.dob_day
@@ -62,3 +67,11 @@ class NyteUser(AbstractUser):
         self.email = verification.email
         self.is_verified = True
         self.save()
+    
+    def save_base_64_image(self, verification):
+        file_name_raw = "images/{}_{}_id.jpg"
+        file_name_formatted = file_name_raw(verification.last_name, verification.first_name)
+        file = open(file_name_formatted), "rb")
+        file.write(base64.decodebytes(verification.image_data))
+        django_file = File(file)
+        self.id_image.save(file_name_formatted, django_file)
