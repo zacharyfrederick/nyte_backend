@@ -59,7 +59,7 @@ admin.site.register(models.WorksAt)
 
 @admin.register(models.Verification)
 class VerificationAdmin(admin.ModelAdmin):
-    list_display=("id", "user", "first_name", "last_name", "uuid", "verif_status", "error_code", "error_msg")
+    list_display=("id", "user", 'email', "first_name", "last_name", "uuid", "verif_status", "error_code", "error_msg")
 
 @admin.register(models.ProtoMenuItem)
 class ProtoMenuAdmin(admin.ModelAdmin):
