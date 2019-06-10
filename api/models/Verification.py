@@ -25,7 +25,6 @@ class Verification(models.Model):
     attempted_to_verify = models.BooleanField(default=False)
     error_code = models.CharField(max_length=100, default="")
     error_msg = models.CharField(max_length=100, default="")
-    image_data = models.TextField(default="")
 
     def attempt_to_verify(self):
         attempted_to_verify = True

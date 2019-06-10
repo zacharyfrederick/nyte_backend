@@ -58,7 +58,6 @@ class NyteUser(AbstractUser):
         })
 
     def update_verification_info(self, verification):
-        self.save_base_64_image(verification)
         self.first_name = verification.first_name
         self.last_name = verification.last_name
         self.dob_day = verification.dob_day
@@ -68,10 +67,3 @@ class NyteUser(AbstractUser):
         self.is_verified = True
         self.save()
     
-    def save_base_64_image(self, verification):
-        file_name_raw = "images/{}_{}_id.jpg"
-        file_name_formatted = file_name_raw(verification.last_name, verification.first_name)
-        file = open(file_name_formatted, "rb")
-        file.write(base64.decodebytes(verification.image_data))
-        django_file = File(file)
-        self.id_image.save(file_name_formatted, django_file)

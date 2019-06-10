@@ -13,6 +13,8 @@ import json
 from .managers import FacebookManager
 from rest_framework.permissions import IsAuthenticated
 from .authentication import NyteAuthentication
+from rest_framework.parsers import FileUploadParser
+from rest_framework import status
 
 #might need to delete this idk if we will use it
 class CreateNyteUser(APIView):
@@ -184,3 +186,15 @@ def fb_logout_view(request):
             return JsonResponse({"error": "no access_token supplied"})
     else:
         return JsonResponse({"error": "only POST allowed to this url"})
+
+class VerificationIdUpload(APIView):
+    parser_class = (FileUploadParser,)
+
+    def post(self, request, *args, **kwargs):
+        file_serializer = serializers.VerificationIDSerializer(data=request.data)
+
+        if file_serializer.is_valid():
+            file_serializer.save()
+            return Response(file_serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)

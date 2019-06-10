@@ -70,3 +70,8 @@ class VerificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Verification
         fields = "__all__"
+
+class VerificationIDSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.VerificationID
+        fields = "__all__"
