@@ -139,6 +139,7 @@ class ProtoOrderDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = serializers.ProtoOrderSerializer
 
 class VerificationCreation(generics.ListCreateAPIView):
+    parser_class = (FileUploadParser,)
     queryset = models.Verification.objects.all()
     serializer_class = serializers.VerificationSerializer
 
@@ -190,7 +191,7 @@ def fb_logout_view(request):
 class VerificationIdUpload(APIView):
     parser_class = (FileUploadParser,)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request,  *args, **kwargs):
         file_serializer = serializers.VerificationIDSerializer(data=request.data)
 
         if file_serializer.is_valid():
@@ -198,3 +199,8 @@ class VerificationIdUpload(APIView):
             return Response(file_serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(file_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self, request, *args, **kwargs):
+        images = models.VerificationID.objects.all()
+        serializer = serializers.VerificationIDSerializer(images, many=True)
+        return Response(serializer.data)
