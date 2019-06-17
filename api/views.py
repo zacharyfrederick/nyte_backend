@@ -15,6 +15,7 @@ from rest_framework.permissions import IsAuthenticated
 from .authentication import NyteAuthentication
 from rest_framework.parsers import FileUploadParser
 from rest_framework import status
+import stripe
 
 #might need to delete this idk if we will use it
 class CreateNyteUser(APIView):
@@ -204,3 +205,18 @@ class VerificationIdUpload(APIView):
         images = models.VerificationID.objects.all()
         serializer = serializers.VerificationIDSerializer(images, many=True)
         return Response(serializer.data)
+
+class EphemeralKeyView(APIView):
+    def post(self, request, *args, **kwargs):
+        try:
+            user_id = json.loads(request.body)['user']
+            api_version = json.loads(request.body)['api_version']
+            try:
+                user = models.NyteUser.objects.get(id=user_id)
+                key = stripe.EphemeralKey.create(customer=user.stripe_id, stripe_version=api_version)
+                return Response({"key": key})
+            except models.NyteUser.DoesNotExist:
+                return Response({"error": "Invalid user_id"})
+        except KeyError as e:
+            print(e)
+            return Response({"error": "invalid credentials supplied"})

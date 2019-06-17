@@ -135,7 +135,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/')
 
@@ -169,5 +169,9 @@ TWILIO_FROM_NUM = ""
 #Age checker settings
 AGE_CHECKER_API_KEY = "xmTU0wA12zFhg2mZmiQ0ookNoSUZ68S4"
 AGE_CHECKER_SECRET = "yqKqNATKU00yA1ie"
+
+#strip settings
+STRIPE_PUBLIC_KEY = "pk_test_ut867fONoVm163Ro4J1QX5sh00XREjDW6f"
+STRIPE_SECRET_KEY = "sk_test_DjOGG9xXc9hKkm15WpoNOntz00LBttlsdL"
 
 django_heroku.settings(locals())

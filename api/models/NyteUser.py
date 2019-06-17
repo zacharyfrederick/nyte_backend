@@ -40,6 +40,7 @@ class NyteUser(AbstractUser):
     gender = models.CharField(max_length=10, blank=True, null=True)
     is_verified = models.BooleanField(default=False, blank=True)
     id_image = models.ImageField(null=True);
+    stripe_id = models.CharField(max_length=100, null=True)
 
     username = None
 
@@ -64,6 +65,7 @@ class NyteUser(AbstractUser):
         self.dob_month = verification.dob_month
         self.dob_year = verification.dob_year
         self.email = verification.email
+        self.stripe_id = verification.stripe_id
         self.is_verified = True
         self.save()
     
