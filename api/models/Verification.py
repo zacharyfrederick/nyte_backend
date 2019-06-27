@@ -3,6 +3,7 @@ from .NyteUser import NyteUser
 from ..managers import AgeCheckerManager
 from drf_extra_fields.fields import Base64ImageField
 from django.conf import settings
+import stripe
 
 VerificationChoices = (
     ("no", "Not Verified"),

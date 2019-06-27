@@ -82,6 +82,12 @@ class FacebookManager():
         except ValueError:
             return None
 
+    def get_access_token(self, auth_Code):
+        formatted_url = self.create_token_request_url(auth_code)
+        response = requests.get(url=formatted_url)
+        return self.interpret_json(response, self.read_token_request_json)
+        
+
     def send_request(self, auth_code=None, access_token=None, logout=None):
         formatted_url = None
         json_method = None
