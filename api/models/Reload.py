@@ -46,7 +46,7 @@ class Reload(models.Model):
         self.card = self.stripe_manager.get_payment()
 
     def create_charge_and_get_results(self):
-        self.stripe_manager.create_charge(customer=self.user, amount=int(self.amount*100), card=self.card)
+        self.stripe_manager.create_charge(customer=self.user, amount=int(self.amount), card=self.card)
         self.set_failure_state()
         self.set_paid()
         self.set_stripe_transaction_id()
