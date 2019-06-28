@@ -8,7 +8,7 @@ class Reload(models.Model):
     user = models.ForeignKey(NyteUser, on_delete=models.CASCADE)
     card = models.CharField(max_length=100, null=True)
     amount = models.FloatField(null=True)
-    paid = models.BooleanField(default=False, blank=True)
+    paid = models.BooleanField(default=False, blank=True, null=True)
     failure_code = models.CharField(max_length=50, blank=True, null=True, default="None")
     failure_message = models.CharField(max_length=100, blank=True, null=True, default="None")
     stripe_transaction_id = models.CharField(max_length=100, blank=True, null=True)
@@ -54,6 +54,6 @@ class Reload(models.Model):
         self.set_card()
 
     def attempt_to_update_balance(self):
-        if self.failure_code is not "None":
+        if self.failure_code is not "None" :
             self.user.account_balance = self.user.account_balance + self.amount
             self.user.save()
