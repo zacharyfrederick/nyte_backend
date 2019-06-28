@@ -37,4 +37,6 @@ urlpatterns = [
     path('VerificationUpdate/<int:pk>', views.VerificationUpdate.as_view()),
     #path('VerificationID/', views.VerificationIdUpload.as_view()),
     #path('EphemeralKey/', views.EphemeralKeyView.as_view()),
+    path('StripeReload/', views.StripeReload.as_view()),
+    path('StripeReload/<int:pk>', views.StripeReload.as_view()),
 ]

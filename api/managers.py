@@ -5,6 +5,7 @@ import requests
 from collections import namedtuple
 from twilio.rest import Client
 from .helpers import TokenRequestResponse, TokenValidationResponse, AgeCheckerResponse
+import stripe
 
 class AgeCheckerManager():
     VERIFICATION_URL = "https://api.agechecker.net/v1/create"
@@ -145,3 +146,17 @@ class NyteUserManager(BaseUserManager):
         if extra_fields.get('is_superuser') is not True:
             raise ValueError(_('Superuser must have is_superuser=True.'))
         return self.create_user(email, password, **extra_fields)
+
+class Stripe_Manager():
+
+    def create_charge(self, user, amount, source):
+        self.response = stripe.Charge.create(customer=user.stripe_id, amount=amount, card=source, description="Charge from Nyte App", currency="usd", capture="true")
+
+    def get_failure_code(self):
+        return self.response['failure_code']
+        
+    def get_failure_message(self):
+        return self.response['failure_message']
+
+    def get_paid(self):
+        return self.response['paid']

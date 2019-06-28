@@ -18,6 +18,8 @@ class NyteUser(AbstractUser):
         ("OW", "Owner"),
         ("BA", "Bartender"),
     )
+    NO_DEFAULT_PAYMENT = "None"
+    STRIPE_ID_DOES_NOT_EXIST = "None"
 
     dob_day = models.CharField(max_length=100, default="")
     dob_month = models.CharField(max_length=100, default="")
@@ -25,7 +27,7 @@ class NyteUser(AbstractUser):
     user_type = models.CharField(max_length=100, blank=False, null=True, choices=USER_TYPE, default="PA")
     is_age_verified = models.BooleanField(default=False, blank=False, null=False)
     is_email_verified = models.BooleanField(default=False, blank=False, null=False)
-    membership = models.ManyToManyField(WorksAt)
+    membership = models.ManyToManyField(WorksAt, blank=True)
     public_key = models.CharField(max_length=500, blank=True, null=True)
     private_key = models.CharField(max_length=2000, blank=True, null=True)
     email = models.EmailField(_('email address'), unique=True)
@@ -40,7 +42,9 @@ class NyteUser(AbstractUser):
     gender = models.CharField(max_length=10, blank=True, null=True)
     is_verified = models.BooleanField(default=False, blank=True)
     id_image = models.ImageField(null=True);
-    stripe_id = models.CharField(max_length=100, null=True)
+    stripe_id = models.CharField(max_length=100, null=True, default=STRIPE_ID_DOES_NOT_EXIST)
+    account_balance = models.FloatField(null=True, default=0.0)
+    default_payment = models.CharField(max_length=100, null=True, default=NO_DEFAULT_PAYMENT)
 
     username = None
 

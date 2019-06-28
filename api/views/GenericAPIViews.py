@@ -118,3 +118,7 @@ class VerificationCreation(generics.ListCreateAPIView):
 class VerificationUpdate(generics.UpdateAPIView):
     queryset = models.Verification.objects.all()
     serializer_class = serializers.VerificationSerializer
+
+class StripeReload(generics.ListCreateAPIView):
+    queryset = models.Reload.objects.all()
+    serializer_class = serializers.ReloadSerializer

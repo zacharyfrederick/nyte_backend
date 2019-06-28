@@ -22,3 +22,7 @@ def attempt_to_verifiy(sender, **kwargs):
         if verification_obj.attempted_to_verify == False:
                 verification_obj.attempt_to_verify()
 
+@receiver(pre_save, sender=models.Reload)
+def attempt_to_reload_balance(sender, **kwargs):
+        reload_obj = kwargs.get("instance")
+        reload_obj.attempt_to_reload()

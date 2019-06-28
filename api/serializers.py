@@ -75,3 +75,8 @@ class VerificationIDSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.VerificationID
         fields = "__all__"
+
+class ReloadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Reload
+        fields = "__all__"
