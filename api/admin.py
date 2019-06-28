@@ -19,7 +19,7 @@ class NyteUserAdmin(UserAdmin):
         'user_type',  
         'is_verified',
         'id_image',
-        'stripe_id','default_payment')
+        'stripe_id','default_payment','account_balance')
     list_filter = ('user_type', 'is_staff', 'is_active',)
     fieldsets = (
         ("User Data", {'fields': 
@@ -36,7 +36,7 @@ class NyteUserAdmin(UserAdmin):
         'membership', 
         'is_verified',
         'stripe_id',
-        'default_payment')}),
+        'default_payment','account_balance')}),
         ('Permissions', {'fields': ('is_staff', 'is_active')}),
     )
     add_fieldsets = (
