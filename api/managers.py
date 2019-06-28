@@ -149,8 +149,8 @@ class NyteUserManager(BaseUserManager):
 
 class Stripe_Manager():
 
-    def create_charge(self, user, amount):
-        self.response = stripe.Charge.create(customer=user.stripe_id, amount=amount, description="Charge from Nyte App", currency="usd", capture="true")
+    def create_charge(self, card,customer, amount):
+        self.response = stripe.Charge.create(card=card, customer=customer, amount=amount, description="Charge from Nyte App", currency="usd", capture="true")
 
     def get_failure_code(self):
         return self.response['failure_code']

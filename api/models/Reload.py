@@ -6,7 +6,7 @@ from ..managers import Stripe_Manager
 class Reload(models.Model):
     stripe_id = models.CharField(max_length=100, blank=True)
     user = models.ForeignKey(NyteUser, on_delete=models.CASCADE)
-    payment_source = models.CharField(max_length=100, blank=True)
+    card = models.CharField(max_length=100, null=True)
     amount = models.FloatField(null=True)
     paid = models.BooleanField(default=False, blank=True)
     failure_code = models.CharField(max_length=50, blank=True, null=True)
@@ -42,12 +42,12 @@ class Reload(models.Model):
     def set_stripe_transaction_id(self):
         self.stripe_transaction_id = self.stripe_manager.get_transaction_id()
     
-    def set_payment_source(self):
-        self.payment_source = self.stripe_manager.get_payment()
+    def set_card(self):
+        self.card = self.stripe_manager.get_payment()
 
     def create_charge_and_get_results(self):
-        self.stripe_manager.create_charge(self.user, int(self.amount*100))
+        self.stripe_manager.create_charge(customer=self.user, amount=int(self.amount*100), card=self.card)
         self.set_failure_state()
         self.set_paid()
         self.set_stripe_transaction_id()
-        self.set_payment_source()
+        self.set_card()
