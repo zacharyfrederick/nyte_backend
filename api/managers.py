@@ -83,7 +83,7 @@ class FacebookManager():
         except ValueError:
             return None
 
-    def get_access_token(self, auth_Code):
+    def get_access_token(self, auth_code):
         formatted_url = self.create_token_request_url(auth_code)
         response = requests.get(url=formatted_url)
         return self.interpret_json(response, self.read_token_request_json)
@@ -149,8 +149,8 @@ class NyteUserManager(BaseUserManager):
 
 class Stripe_Manager():
 
-    def create_charge(self, user, amount, source):
-        self.response = stripe.Charge.create(customer=user.stripe_id, amount=amount, card=source, description="Charge from Nyte App", currency="usd", capture="true")
+    def create_charge(self, user, amount):
+        self.response = stripe.Charge.create(customer=user.stripe_id, amount=amount, description="Charge from Nyte App", currency="usd", capture="true")
 
     def get_failure_code(self):
         return self.response['failure_code']
@@ -160,3 +160,9 @@ class Stripe_Manager():
 
     def get_paid(self):
         return self.response['paid']
+
+    def get_transaction_id(self):
+        return self.response['id']
+
+    def get_payment(self):
+        return self.response['payment_method']
