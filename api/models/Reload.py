@@ -12,6 +12,7 @@ class Reload(models.Model):
     failure_code = models.CharField(max_length=50, blank=True, null=True, default="None")
     failure_message = models.CharField(max_length=100, blank=True, null=True, default="None")
     stripe_transaction_id = models.CharField(max_length=100, blank=True, null=True)
+    has_attempted_to_reload = models.BooleanField(blank=True, default=False)
     
     STRIPE_ID_ERROR = "STRIPE_ID_ERROR"
     STRIPE_ID_ERROR_MESSAGE = "stripe_id does not exist for this user"
@@ -20,6 +21,7 @@ class Reload(models.Model):
     PAYMENT_ERROR_MESSAGE = "no payment is set for this user"
 
     def attempt_to_reload(self):
+        self.has_attempted_to_reload = True
         self.stripe_manager = Stripe_Manager()
         self.set_stripe_id()
         if self.failure_code is not self.STRIPE_ID_ERROR:
@@ -51,9 +53,8 @@ class Reload(models.Model):
         self.set_failure_state()
         self.set_paid()
         self.set_stripe_transaction_id()
-        self.set_card()
 
     def attempt_to_update_balance(self):
-        if self.failure_code is not "None" :
+        if self.failure_code is "None":
             self.user.account_balance = self.user.account_balance + self.amount
             self.user.save()

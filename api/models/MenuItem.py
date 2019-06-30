@@ -1,5 +1,6 @@
 from django.db import models
 from .Venue import Venue
+from .Category import Category
 
 class MenuItem(models.Model):
     ITEM_TYPE = (
@@ -14,5 +15,6 @@ class MenuItem(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
     description = models.CharField(max_length=300, null=True, blank=True)
     rating = models.FloatField(default=0.0, null=True, blank=True)
-    item_type = models.CharField(max_length=100, null=False, blank=False, choices=ITEM_TYPE)
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE)
+    price = models.FloatField(default=0.0, null=True, blank=True)
     

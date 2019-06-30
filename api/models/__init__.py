@@ -14,3 +14,4 @@ from .ProtoOrder import ProtoOrder
 from .Verification import Verification
 from .VerificationID import VerificationID
 from .Reload import Reload
+from .Category import Category

@@ -80,3 +80,13 @@ class ReloadSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Reload
         fields = "__all__"
+
+class ViewBalanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.NyteUser
+        fields = ("id", "stripe_id", "account_balance", )
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Category
+        fields = "__all__"

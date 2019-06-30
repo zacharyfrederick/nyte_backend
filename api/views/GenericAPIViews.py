@@ -66,6 +66,12 @@ class TransactionList(generics.ListCreateAPIView):
     queryset = models.Transaction.objects.all()
     serializer_class = serializers.TransactionSerializer
 
+class TransactionByUser(generics.ListCreateAPIView):
+    serializer_class = serializers.TransactionSerializer
+
+    def get_queryset(self):
+        return models.Transaction.objects.filter(user=self.kwargs['pk'])
+
 class TransactionDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Transaction.objects.all()
     serializer_class = serializers.TransactionSerializer
@@ -122,3 +128,29 @@ class VerificationUpdate(generics.UpdateAPIView):
 class StripeReload(generics.ListCreateAPIView):
     queryset = models.Reload.objects.all()
     serializer_class = serializers.ReloadSerializer
+
+class StripeReloadByUser(generics.ListCreateAPIView):
+    serializer_class = serializers.ReloadSerializer
+
+    def get_queryset(self):
+        return models.Reload.objects.filter(user=self.kwargs['pk'])
+
+class ViewBalance(generics.RetrieveAPIView):
+    queryset = models.NyteUser.objects.all()
+    serializer_class = serializers.ViewBalanceSerializer
+
+class CategoryByVenue(generics.ListCreateAPIView):
+    serializer_class = serializers.CategorySerializer
+
+    def get_queryset(self):
+        return models.Category.objects.filter(venue=self.kwargs['pk'])
+
+class CategoryCreate(generics.CreateAPIView):
+    serializer_class = serializers.CategorySerializer
+    queryset = models.Category.objects.all()
+
+class MenuItemByCategory(generics.ListAPIView):
+    serializer_class = serializers.MenuItemSerializer
+
+    def get_queryset(self):
+        return models.MenuItem.objects.filter(category=self.kwargs['pk'])

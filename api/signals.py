@@ -25,4 +25,12 @@ def attempt_to_verifiy(sender, **kwargs):
 @receiver(pre_save, sender=models.Reload)
 def attempt_to_reload_balance(sender, **kwargs):
         reload_obj = kwargs.get("instance")
-        reload_obj.attempt_to_reload()
+        if reload_obj.has_attempted_to_reload == False:
+                reload_obj.attempt_to_reload()
+
+@receiver(pre_save, sender=models.Transaction)
+def attempt_to_charge_transaction(sender, **kwargs):
+        transaction = kwargs.get("instance")
+        if transaction.has_attempted_to_charge is not True:
+                transaction.attempt_to_charge()
+        
