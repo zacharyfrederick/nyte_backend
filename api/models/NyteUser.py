@@ -43,7 +43,7 @@ class NyteUser(AbstractUser):
     is_verified = models.BooleanField(default=False, blank=True)
     id_image = models.ImageField(null=True);
     stripe_id = models.CharField(max_length=100, null=True, default=STRIPE_ID_DOES_NOT_EXIST)
-    account_balance = models.FloatField(null=True, default=0.0)
+    account_balance = models.IntegerField(null=True, default=0)
     default_payment = models.CharField(max_length=100, null=True, default=NO_DEFAULT_PAYMENT)
 
     username = None

@@ -15,7 +15,7 @@ class Transaction(models.Model):
     complete = models.DateTimeField(null=True, blank=True)
     canceled = models.DateTimeField(null=True, blank=True)
     cancal_reason = models.CharField(max_length=100, null=True, blank=True)
-    total = models.FloatField(default=0.0, null=True)
+    total = models.IntegerField(default=0, null=True)
     data = JSONField(null=True, blank=True)
     card = models.CharField(max_length=100, null=True, blank=True)
     failure_code = models.CharField(max_length=50, blank=True, null=True, default="None")
@@ -45,7 +45,7 @@ class Transaction(models.Model):
             self.failure_message = self.STRIPE_ID_ERROR_MESSAGE
 
     def create_charge_and_get_results(self):
-        self.stripe_manager.create_charge(customer=self.user, amount=int(self.total), card=self.card)
+        self.stripe_manager.create_charge(customer=self.user, amount=self.total, card=self.card)
         self.set_failure_state()
         self.set_stripe_transaction_id()
         self.attempt_to_update_balance()

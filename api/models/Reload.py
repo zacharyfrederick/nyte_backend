@@ -7,7 +7,7 @@ class Reload(models.Model):
     stripe_id = models.CharField(max_length=100, blank=True)
     user = models.ForeignKey(NyteUser, on_delete=models.CASCADE)
     card = models.CharField(max_length=100, null=True)
-    amount = models.FloatField(null=True)
+    amount = models.IntegerField(null=True)
     paid = models.BooleanField(default=False, blank=True, null=True)
     failure_code = models.CharField(max_length=50, blank=True, null=True, default="None")
     failure_message = models.CharField(max_length=100, blank=True, null=True, default="None")
@@ -49,7 +49,7 @@ class Reload(models.Model):
         self.card = self.stripe_manager.get_payment()
 
     def create_charge_and_get_results(self):
-        self.stripe_manager.create_charge(customer=self.user, amount=int(self.amount), card=self.card)
+        self.stripe_manager.create_charge(customer=self.user, amount=self.amount, card=self.card)
         self.set_failure_state()
         self.set_paid()
         self.set_stripe_transaction_id()
