@@ -22,6 +22,7 @@ class Transaction(models.Model):
     failure_message = models.CharField(max_length=100, blank=True, null=True, default="None")
     stripe_transaction_id = models.CharField(max_length=100, blank=True, null=True)
     has_attempted_to_charge = models.BooleanField(blank=True, default=False)
+    is_completed = models.BooleanField(default=False, blank=True)
 
 
     STRIPE_ID_ERROR = "STRIPE_ID_ERROR"

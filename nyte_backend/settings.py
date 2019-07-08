@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import django_heroku
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -85,7 +86,7 @@ DATABASES = {
         'USER': 'zach',
         'PASSWORD': 'HelloEd12',
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '5433',
         'TEST': {
             'NAME': 'd441dv4c85a2q3',
         },
@@ -93,11 +94,7 @@ DATABASES = {
 }
 
 import dj_database_url
-DATABASES['default'] = dj_database_url.config(default='postgres://zach:HelloEd12@localhost:5432/nyte', conn_max_age=600)
-
-
-
-
+DATABASES['default'] = dj_database_url.config(default='postgres://zach:HelloEd12@localhost:5433/nyte', conn_max_age=600)
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators

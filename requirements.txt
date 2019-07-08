@@ -9,7 +9,6 @@ django-allauth==0.39.1
 django-cors-headers==2.5.2
 django-extra-fields==1.2.1
 django-filter==2.1.0
-django-heroku==0.3.1
 djangorestframework==3.9.1
 facebook-sdk==3.1.0
 gunicorn==19.9.0
@@ -20,7 +19,7 @@ Markdown==3.0.1
 mccabe==0.6.1
 oauthlib==3.0.1
 Pillow==6.0.0
-psycopg2==2.7.7
+psycopg2==2.8.3
 PyJWT==1.7.1
 pylint==2.3.1
 pylint-django==2.0.9
