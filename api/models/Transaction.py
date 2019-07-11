@@ -14,7 +14,7 @@ class Transaction(models.Model):
     ready = models.DateTimeField(null=True, blank=True)
     complete = models.DateTimeField(null=True, blank=True)
     canceled = models.DateTimeField(null=True, blank=True)
-    cancal_reason = models.CharField(max_length=100, null=True, blank=True)
+    cancel_reason = models.CharField(max_length=100, null=True, blank=True)
     total = models.IntegerField(default=0, null=True)
     data = JSONField(null=True, blank=True)
     failure_code = models.CharField(max_length=50, blank=True, null=True, default="None")
