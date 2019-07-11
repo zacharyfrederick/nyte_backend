@@ -34,3 +34,8 @@ def attempt_to_charge_transaction(sender, **kwargs):
         if transaction.has_attempted_to_charge is not True:
                 transaction.attempt_to_charge()
         
+@receiver(pre_save, sender=models.MenuItem)
+def set_default_convenience_fee(sender, **kwargs):
+        menu_item = kwargs.get("instance")
+        if menu_item.convenience_fee == 0.0:
+                menu_item.convenience_fee = menu_item.venue.convenience_fee

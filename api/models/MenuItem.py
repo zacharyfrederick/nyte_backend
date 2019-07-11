@@ -17,5 +17,5 @@ class MenuItem(models.Model):
     rating = models.FloatField(default=0.0, null=True, blank=True)
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE)
     price = models.FloatField(default=0.0, null=True, blank=True)
-    convenience_fee = models.FloatField(null=True, blank=True, default=venue.convenience_fee);
+    convenience_fee = models.FloatField(null=True, blank=True, default=0.0);
     

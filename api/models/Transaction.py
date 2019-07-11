@@ -28,7 +28,7 @@ class Transaction(models.Model):
     STRIPE_ID_ERROR_MESSAGE = "stripe_id does not exist for this user"
 
     INSUFFICIENT_BALANCE_ERROR = "INSUFFICIENT_BALANCE"
-    INSUFFICIENT_BALANCE_ERROR_MESSAGE = "Your account has an insufficient balance to make this transaction"
+    INSUFFICIENT_BALANCE_ERROR_MESSAGE = "Your account nhas an insufficient balance to make this transaction"
 
     def attempt_to_charge(self):
         self.has_attempted_to_charge = True
