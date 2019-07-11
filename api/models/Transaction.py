@@ -5,6 +5,25 @@ from django.contrib.postgres.fields import JSONField
 from ..managers import Stripe_Manager
 import datetime 
 import django
+import json
+from .MenuItem import MenuItem
+
+class MenuItemHelper():
+    def __init__(self, item_id, quantity):
+        self.item_id = item_id
+        self.quantity = quantity
+        self.get_data_with_id()
+
+    def get_data_with_id(self):
+        menu_item = MenuItem.objects.get(id=self.item_id)
+        self.price = menu_item.price
+        self.convenience_fee = menu_item.convenience_fee
+        self.name = menu_item.name
+
+    def to_json(self):
+        return { "id": self.item_id, "quantity": self.quantity, "name" : self.name, "price": self.price, "convenience_fee" : self.convenience_fee}
+
+
 
 class Transaction(models.Model):
     user = models.ForeignKey(NyteUser, on_delete=models.CASCADE)
@@ -22,13 +41,14 @@ class Transaction(models.Model):
     stripe_transaction_id = models.CharField(max_length=100, blank=True, null=True)
     has_attempted_to_charge = models.BooleanField(blank=True, default=False)
     is_completed = models.BooleanField(default=False, blank=True)
+    is_data_formatted = models.BooleanField(default=False, blank=True)
 
 
     STRIPE_ID_ERROR = "STRIPE_ID_ERROR"
     STRIPE_ID_ERROR_MESSAGE = "stripe_id does not exist for this user"
 
     INSUFFICIENT_BALANCE_ERROR = "INSUFFICIENT_BALANCE"
-    INSUFFICIENT_BALANCE_ERROR_MESSAGE = "Your account nhas an insufficient balance to make this transaction"
+    INSUFFICIENT_BALANCE_ERROR_MESSAGE = "Your account has an insufficient balance to make this transaction"
 
     def attempt_to_charge(self):
         self.has_attempted_to_charge = True
@@ -67,3 +87,13 @@ class Transaction(models.Model):
             self.failure_code = self.INSUFFICIENT_BALANCE_ERROR
             self.failure_message = self.INSUFFICIENT_BALANCE_ERROR_MESSAGE
     
+    def format_data(self):
+        menu_items = {}
+
+        for index, menu_item_id in enumerate(self.data):
+            menu_item = MenuItemHelper(item_id=menu_item_id, quantity=self.data[menu_item_id])
+            menu_items[index] = menu_item.to_json()
+
+        self.data = menu_items
+        self.is_data_formatted = True
+        

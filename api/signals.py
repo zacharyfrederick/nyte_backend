@@ -3,6 +3,7 @@ from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from rest_framework.authtoken.models import Token
 from django.conf import settings
+import json
 
 @receiver(pre_save, sender=models.ProtoOrder)
 def proto_order_pre_save(sender, **kwargs):
@@ -33,9 +34,14 @@ def attempt_to_charge_transaction(sender, **kwargs):
         transaction = kwargs.get("instance")
         if transaction.has_attempted_to_charge is not True:
                 transaction.attempt_to_charge()
+        if transaction.is_data_formatted is False:
+                transaction.format_data()
         
 @receiver(pre_save, sender=models.MenuItem)
 def set_default_convenience_fee(sender, **kwargs):
         menu_item = kwargs.get("instance")
         if menu_item.convenience_fee == 0.0:
                 menu_item.convenience_fee = menu_item.venue.convenience_fee
+                
+
+        
