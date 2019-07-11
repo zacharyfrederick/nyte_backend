@@ -154,3 +154,9 @@ class MenuItemByCategory(generics.ListAPIView):
 
     def get_queryset(self):
         return models.MenuItem.objects.filter(category=self.kwargs['pk'])
+
+class OpenTransactions(generics.ListAPIView):
+    serializer_class = serializers.TransactionSerializer;
+
+    def get_queryset(self):
+        return models.Transaction.objects.all().exclude(status="completed");

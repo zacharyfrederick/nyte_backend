@@ -44,4 +44,5 @@ urlpatterns = [
     path('Category/<int:pk>/', views.CategoryByVenue.as_view()),
     path('Category/', views.CategoryCreate.as_view()),
     path('MenuItem/<int:pk>/', views.MenuItemByCategory.as_view()),
+    path('Orders/', views.OpenTransactions.as_view()),
 ]
