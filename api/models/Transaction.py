@@ -17,7 +17,6 @@ class Transaction(models.Model):
     cancal_reason = models.CharField(max_length=100, null=True, blank=True)
     total = models.FloatField(default=0.0, null=True)
     data = JSONField(null=True, blank=True)
-    card = models.CharField(max_length=100, null=True, blank=True)
     failure_code = models.CharField(max_length=50, blank=True, null=True, default="None")
     failure_message = models.CharField(max_length=100, blank=True, null=True, default="None")
     stripe_transaction_id = models.CharField(max_length=100, blank=True, null=True)
