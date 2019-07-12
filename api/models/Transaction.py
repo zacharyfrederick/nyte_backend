@@ -65,9 +65,9 @@ class Transaction(models.Model):
             self.failure_message = self.STRIPE_ID_ERROR_MESSAGE
 
     def create_charge_and_get_results(self):
-        self.stripe_manager.create_charge(customer=self.user, amount=self.total, card=self.card)
-        self.set_failure_state()
-        self.set_stripe_transaction_id()
+        #self.stripe_manager.create_charge(customer=self.user, amount=self.total, card=self.card)
+        #self.set_failure_state()
+        #self.set_stripe_transaction_id()
         self.attempt_to_update_balance()
 
     def set_failure_state(self):
