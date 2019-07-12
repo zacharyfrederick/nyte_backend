@@ -42,6 +42,7 @@ class Transaction(models.Model):
     has_attempted_to_charge = models.BooleanField(blank=True, default=False)
     is_completed = models.BooleanField(default=False, blank=True)
     is_data_formatted = models.BooleanField(default=False, blank=True)
+    tip = models.FloatField(default=0.0, blank=False)
 
 
     STRIPE_ID_ERROR = "STRIPE_ID_ERROR"
