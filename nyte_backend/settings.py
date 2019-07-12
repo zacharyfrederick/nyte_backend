@@ -86,7 +86,7 @@ DATABASES = {
         'USER': 'zach',
         'PASSWORD': 'HelloEd12',
         'HOST': 'localhost',
-        'PORT': '5433',
+        'PORT': '5432',
         'TEST': {
             'NAME': 'd441dv4c85a2q3',
         },
@@ -94,7 +94,7 @@ DATABASES = {
 }
 
 import dj_database_url
-DATABASES['default'] = dj_database_url.config(default='postgres://zach:HelloEd12@localhost:5433/nyte', conn_max_age=600)
+DATABASES['default'] = dj_database_url.config(default='postgres://zach:HelloEd12@localhost:5432/nyte', conn_max_age=600)
 
 
 # Password validation

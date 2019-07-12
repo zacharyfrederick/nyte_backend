@@ -31,7 +31,7 @@ urlpatterns = [
     path('ProtoOrder/', views.ProtoOrderList.as_view()),
     path('ProtoOrder/<int:pk>', views.ProtoOrderDetail.as_view()),
     path('FacebookLogin/', views.LoginView.as_view()),
-    #path('FacebookLogout/', views.fb_logout_view),
+    path('FacebookLogout/', views.FacebookLogout.as_view()),
     path('Verification/', views.VerificationCreation.as_view()),
     path('VerificationUpdate/<int:pk>', views.VerificationUpdate.as_view()),
     #path('VerificationID/', views.VerificationIdUpload.as_view()),
