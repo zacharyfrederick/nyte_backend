@@ -91,10 +91,14 @@ class Transaction(models.Model):
     def format_data(self):
         menu_items = {}
 
-        for index, menu_item_id in enumerate(self.data):
-            menu_item = MenuItemHelper(item_id=menu_item_id, quantity=self.data[menu_item_id])
-            menu_items[index] = menu_item.to_json()
+        try:
+            for index, menu_item_id in enumerate(self.data):
+                menu_item = MenuItemHelper(item_id=menu_item_id, quantity=self.data[menu_item_id])
+                menu_items[index] = menu_item.to_json()
 
-        self.data = menu_items
-        self.is_data_formatted = True
+            self.data = menu_items
+            self.is_data_formatted = True
+        except Exception:
+            self.failure_code = "DATA_ERROR"
+            self.failure_message = "Could not parse order data"
         
