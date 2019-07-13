@@ -66,6 +66,10 @@ class TransactionList(generics.ListCreateAPIView):
     queryset = models.Transaction.objects.all()
     serializer_class = serializers.TransactionSerializer
 
+class TransactionDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.Transaction.objects.all()
+    serializer_class = serializers.TransactionSerializer
+
 class TransactionByUser(generics.ListCreateAPIView):
     serializer_class = serializers.TransactionSerializer
 
