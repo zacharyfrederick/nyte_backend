@@ -34,6 +34,8 @@ class LoginView(APIView):
             return auth_code
         except KeyError:
             return Response(self.AUTHORIZATION_CODE_NOT_SUPPLIED_ERROR)
+        except json.JSONDecodeError:
+            return Response("Something went wrong")
 
     def get_user_with_response_data(self, response):
         if response is not None:

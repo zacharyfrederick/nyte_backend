@@ -45,5 +45,5 @@ urlpatterns = [
     path('Category/', views.CategoryCreate.as_view()),
     path('MenuItem/<int:pk>/', views.MenuItemByCategory.as_view()),
     path('Orders/', views.OpenTransactions.as_view()),
-    path('TransactionUpdate/<int:pk>', views.TransactionDetail.as_view())
+    path('TransactionUpdate/', views.TransactionUpdate.as_view())
 ]
