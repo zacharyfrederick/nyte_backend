@@ -23,8 +23,6 @@ class MenuItemHelper():
     def to_json(self):
         return { "id": self.item_id, "quantity": self.quantity, "name" : self.name, "price": self.price, "convenience_fee" : self.convenience_fee}
 
-
-
 class Transaction(models.Model):
     user = models.ForeignKey(NyteUser, on_delete=models.CASCADE)
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
