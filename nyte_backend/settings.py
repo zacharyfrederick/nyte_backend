@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'drf_extra_fields',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -133,12 +134,34 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = 'static/'
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/')
+# STATIC_URL = 'static/'
+# PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+# STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/')
 
-MEDIA_URL = "media/"
-MEDIA_ROOT = os.path.join(PROJECT_ROOT, "media/")
+# MEDIA_URL = "media/"
+# MEDIA_ROOT = os.path.join(PROJECT_ROOT, "media/")
+
+
+AWS_LOCATION = 'static'
+AWS_ACCESS_KEY_ID ='AKIAQIGJYKW3LLKNWVGB' 
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME ='nyte-assets'
+AWS_S3_CUSTOM_DOMAIN='%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {    
+     'CacheControl': 'max-age=86400',
+}
+DEFAULT_FILE_STORAGE = 'nyte_backend.storage_backends.MediaStorage'
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+] 
+STATIC_URL='https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
+STATICFILES_FINDERS = (           
+    'django.contrib.staticfiles.finders.FileSystemFinder',    
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+AWS_DEFAULT_ACL = None
 
 AUTH_USER_MODEL = 'api.NyteUser'
 
