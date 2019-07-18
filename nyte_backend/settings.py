@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import django_heroku
-import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -156,13 +155,13 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ] 
 STATIC_URL='https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATIC_ROOT=os.path.join(BASE_DIR, 'static')
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 STATICFILES_FINDERS = (           
     'django.contrib.staticfiles.finders.FileSystemFinder',    
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 AWS_DEFAULT_ACL = None
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 AUTH_USER_MODEL = 'api.NyteUser'
 
@@ -196,4 +195,4 @@ AGE_CHECKER_SECRET = "yqKqNATKU00yA1ie"
 STRIPE_PUBLIC_KEY = "pk_test_ut867fONoVm163Ro4J1QX5sh00XREjDW6f"
 STRIPE_SECRET_KEY = "sk_test_DjOGG9xXc9hKkm15WpoNOntz00LBttlsdL"
 
-django_heroku.settings(locals())
+django_heroku.settings(locals(), staticfiles=False)
