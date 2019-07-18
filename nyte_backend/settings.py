@@ -162,6 +162,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 )
 AWS_DEFAULT_ACL = None
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static/')
 
 AUTH_USER_MODEL = 'api.NyteUser'
 
