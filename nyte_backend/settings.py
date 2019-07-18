@@ -155,7 +155,6 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ] 
 STATIC_URL='https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
-STATIC_ROOT=os.path.join(BASE_DIR, 'static')
 ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'
 STATICFILES_FINDERS = (           
     'django.contrib.staticfiles.finders.FileSystemFinder',    
