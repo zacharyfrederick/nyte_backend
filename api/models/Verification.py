@@ -56,7 +56,6 @@ class Verification(models.Model):
                 name="{} {}".format(self.first_name, self.last_name))
 
             self.stripe_id = customer['id']
-            print("Customer created with an id of {}".format(self.stripe_id))
         except stripe.error.StripeError as e:
             print(e)
             return
