@@ -100,7 +100,7 @@ class OptionStrippedSerializer(serializers.ModelSerializer):
         fields = ('id', 'values')
 
 class OptionSerializer(serializers.ModelSerializer):
-    values = ValueStrippedSerializer(many=True)
+    values = ValueSerializer(many=True)
 
     class Meta:
         model = models.MenuOption
