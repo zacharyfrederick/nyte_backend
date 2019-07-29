@@ -61,6 +61,9 @@ admin.site.register(models.UserSession)
 #admin.site.register(models.Venue)
 admin.site.register(models.WorksAt)
 admin.site.register(models.Category)
+admin.site.register(models.MenuOption)
+admin.site.register(models.OptionValue)
+admin.site.register(models.OptionValuePair)
 
 @admin.register(models.Verification)
 class VerificationAdmin(admin.ModelAdmin):

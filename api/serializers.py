@@ -36,11 +36,6 @@ class IdentitySerializer(serializers.ModelSerializer):
         model = models.Identity
         fields = "__all__"
 
-class MenuItemSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.MenuItem
-        fields = "__all__"
-
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Transaction
@@ -86,7 +81,41 @@ class ViewBalanceSerializer(serializers.ModelSerializer):
         model = models.NyteUser
         fields = ("id", "stripe_id", "account_balance", )
 
+class ValueStrippedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.OptionValue
+        fields = ("id",)
+
+class ValueSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.OptionValue
+        fields = "__all__"
+
+
+class OptionStrippedSerializer(serializers.ModelSerializer):
+    values = ValueStrippedSerializer(many=True)
+
+    class Meta:
+        model = models.MenuOption
+        fields = ('id', 'values')
+
+class OptionSerializer(serializers.ModelSerializer):
+    values = ValueStrippedSerializer(many=True)
+
+    class Meta:
+        model = models.MenuOption
+        fields = "__all__"
+
 class CategorySerializer(serializers.ModelSerializer):
+    options = OptionStrippedSerializer(many=True)
+
     class Meta:
         model = models.Category
+        fields = "__all__"
+
+class MenuItemSerializer(serializers.ModelSerializer):
+    category = CategorySerializer()
+    
+    class Meta:
+        model = models.MenuItem
         fields = "__all__"

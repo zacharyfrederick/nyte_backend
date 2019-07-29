@@ -15,3 +15,6 @@ from .Verification import Verification
 from .VerificationID import VerificationID
 from .Reload import Reload
 from .Category import Category
+from .OptionValue import OptionValue
+from .Option import MenuOption
+from .OptionValuePair import OptionValuePair

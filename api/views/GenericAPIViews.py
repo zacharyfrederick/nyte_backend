@@ -170,3 +170,7 @@ class MenuItemsByVenue(generics.ListAPIView):
 
     def get_queryset(self):
         return models.MenuItem.objects.filter(venue=self.kwargs['pk']);
+
+class OptionList(generics.ListAPIView):
+    serializer_class = serializers.OptionSerializer
+    queryset = models.MenuOption.objects.all()
