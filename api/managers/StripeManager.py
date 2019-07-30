@@ -12,6 +12,7 @@ class Stripe_Manager():
             self.error_code = "RateLimitError"
         except stripe.error.InvalidRequestError as e:
             self.error_code = "InvalidRequestError"
+            print(e)
         except stripe.error.AuthenticationError as e:
             self.error_code = "AuthenticationError"
         except stripe.error.APIConnectionError as e:

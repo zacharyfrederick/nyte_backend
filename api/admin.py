@@ -64,6 +64,7 @@ admin.site.register(models.Category)
 admin.site.register(models.MenuOption)
 admin.site.register(models.OptionValue)
 admin.site.register(models.OptionValuePair)
+admin.site.register(models.Reload)
 
 @admin.register(models.Verification)
 class VerificationAdmin(admin.ModelAdmin):

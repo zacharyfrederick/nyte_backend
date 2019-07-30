@@ -37,10 +37,15 @@ class IdentitySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class TransactionSerializer(serializers.ModelSerializer):
+    venue_name = serializers.SerializerMethodField()
+
     class Meta:
         model = models.Transaction
         fields = "__all__"
 
+    def get_venue_name(self, obj):
+        return obj.venue.name 
+        
 class WorksAtSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.WorksAt

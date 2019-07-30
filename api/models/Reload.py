@@ -2,6 +2,7 @@ from django.db import models
 
 from .NyteUser import NyteUser
 from ..managers import Stripe_Manager
+from datetime import datetime
 
 class Reload(models.Model):
     stripe_id = models.CharField(max_length=100, blank=True)
@@ -13,7 +14,8 @@ class Reload(models.Model):
     failure_message = models.CharField(max_length=100, blank=True, null=True, default="None")
     stripe_transaction_id = models.CharField(max_length=100, blank=True, null=True)
     has_attempted_to_reload = models.BooleanField(blank=True, default=False)
-    
+    timestamp = models.DateTimeField(blank=True, null=True)
+
     STRIPE_ID_ERROR = "STRIPE_ID_ERROR"
     STRIPE_ID_ERROR_MESSAGE = "stripe_id does not exist for this user"
 
@@ -22,6 +24,7 @@ class Reload(models.Model):
 
     def attempt_to_reload(self):
         self.has_attempted_to_reload = True
+        self.timestamp = datetime.now()
         self.stripe_manager = Stripe_Manager()
         self.set_stripe_id()
         if self.failure_code is not self.STRIPE_ID_ERROR:
