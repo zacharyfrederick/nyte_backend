@@ -114,7 +114,7 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class MenuItemSerializer(serializers.ModelSerializer):
-    category = CategorySerializer()
+    options = OptionStrippedSerializer(many=True)
     
     class Meta:
         model = models.MenuItem
