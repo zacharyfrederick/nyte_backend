@@ -118,8 +118,16 @@ class CategorySerializer(serializers.ModelSerializer):
         model = models.Category
         fields = "__all__"
 
+
+class OptionPairingSerializer(serializers.ModelSerializer):
+    option = OptionStrippedSerializer()
+
+    class Meta:
+        model = models.OptionPairing
+        fields = ("option",)
+
 class MenuItemSerializer(serializers.ModelSerializer):
-    options = OptionStrippedSerializer(many=True)
+    pairings = OptionPairingSerializer(many=True)
     
     class Meta:
         model = models.MenuItem

@@ -18,3 +18,4 @@ from .Category import Category
 from .OptionValue import OptionValue
 from .Option import MenuOption
 from .OptionValuePair import OptionValuePair
+from .OptionPairing import OptionPairing
