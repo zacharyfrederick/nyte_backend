@@ -194,4 +194,6 @@ AGE_CHECKER_SECRET = "yqKqNATKU00yA1ie"
 STRIPE_PUBLIC_KEY = "pk_test_ut867fONoVm163Ro4J1QX5sh00XREjDW6f"
 STRIPE_SECRET_KEY = "sk_test_DjOGG9xXc9hKkm15WpoNOntz00LBttlsdL"
 
+FIREBASE_SERVER_KEY = 'AAAAv4Tr6Zc:APA91bG20VhoPZhDvMhYWbjNE3RwO7Coxx-EhPTez2lEsz3JOAsa14q5X9Hxpr57ZLtXcfj7-gfWV1AXy5HfdcdmM6emK5tA-GyfrPoysFCHMpK_dmcbhz_iAGyAxDSh7NarrtDGY2W2'
+
 django_heroku.settings(locals(), staticfiles=False)

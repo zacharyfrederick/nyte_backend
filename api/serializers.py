@@ -112,7 +112,7 @@ class OptionSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 class CategorySerializer(serializers.ModelSerializer):
-    options = OptionStrippedSerializer(many=True)
+    #options = OptionStrippedSerializer(many=True)
 
     class Meta:
         model = models.Category
