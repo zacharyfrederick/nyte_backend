@@ -182,9 +182,9 @@ class OptionListByVenue(generics.ListAPIView):
         queryset = set()
         venue = self.kwargs['pk']
 
-        for item in models.MenuOption.objects.all():
-            if item.menu_item.venue.id == venue:
-                queryset.add(item.id)
+        for item in models.OptionPairing.objects.all():
+            if (item.menu_item.venue.id == venue):
+                queryset.add(item.option.id)
 
         return models.MenuOption.objects.filter(pk__in=queryset)
 
