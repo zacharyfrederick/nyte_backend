@@ -187,3 +187,9 @@ class OptionListByVenue(generics.ListAPIView):
                 queryset.add(item.id)
 
         return models.MenuOption.objects.filter(pk__in=queryset)
+
+class OpenTransactionsByVenue(generics.ListAPIView):
+    serializer_class = serializers.TransactionSerializer
+
+    def get_queryset(self):
+        return models.Transaction.objects.filter(venue=self.kwargs['pk']).exclude(status="completed").exclude(status="canceled")
