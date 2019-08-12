@@ -23,25 +23,27 @@ class LoginView(APIView):
 
     @csrf_exempt
     def post(self, request, *args, **kwargs):
-        auth_code = self.get_auth_code_or_return_error(request)
-        access_token_response = self.facebook.send_request(auth_code=auth_code)
-        user = self.get_user_with_response_data(access_token_response)
-        return user.login_json_response(access_token_response.access_token)
-
-    def get_auth_code_or_return_error(self, request):
         try:
-            auth_code = json.loads(request.body)['authorization_code']
-            return auth_code
+            auth_code = self.get_auth_code_or_return_error(request)
+            access_token_response = self.facebook.send_request(auth_code=auth_code)
+            
+            if access_token_response is not None:
+                user = self.get_user_with_response_data(access_token_response)
+                return user.login_json_response(access_token_response.access_token)
+            else:
+                return Response(self.INVALID_FB_CREDENTIALS_ERROR)
+
         except KeyError:
             return Response(self.AUTHORIZATION_CODE_NOT_SUPPLIED_ERROR)
         except json.JSONDecodeError:
             return Response("Something went wrong")
 
+    def get_auth_code_or_return_error(self, request):
+        auth_code = json.loads(request.body)['authorization_code']
+        return auth_code
+
     def get_user_with_response_data(self, response):
-        if response is not None:
-            return self.get_or_create_user_with_fb_id(fb_id=response.id, access_token=response.access_token)
-        else:
-            return Response(self.INVALID_FB_CREDENTIALS_ERROR)
+        return self.get_or_create_user_with_fb_id(fb_id=response.id, access_token=response.access_token)
 
     def get_or_create_user_with_fb_id(self, fb_id, access_token):
         if models.NyteUser.objects.filter(facebook_id=fb_id).exists():
