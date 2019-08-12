@@ -1,4 +1,6 @@
 from django.db import models
+from .BartenderDevice import BartenderDevice
+from fcm_django.models import FCMDevice
 
 class Venue(models.Model):
     name = models.CharField(max_length=200, null=False, blank=False)
@@ -14,3 +16,12 @@ class Venue(models.Model):
     
     def __str__(self):
         return self.name;
+
+    def update_bartender_devices(self):
+        devices = BartenderDevice.objects.filter(venue=self.id)
+        
+        for device in devices:
+            print("firing message to bartender device")
+            fcm_device = device.device
+            fcm_device.send_message(title="New Order", body="A new order was submitted")
+            
