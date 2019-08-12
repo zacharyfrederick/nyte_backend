@@ -40,7 +40,7 @@ urlpatterns = [
     path('StripeReload/<int:pk>/', views.StripeReloadByUser.as_view()),
     path('ViewBalance/<int:pk>/', views.ViewBalance.as_view()),
     path('Transaction/', views.TransactionList.as_view()),
-    path('Transaction/<int:pk>', views.TransactionByUser.as_view()),
+    path('Transaction/<int:pk>/', views.TransactionByUser.as_view()),
     path('Category/<int:pk>/', views.CategoryByVenue.as_view()),
     path('Category/', views.CategoryCreate.as_view()),
     path('MenuItem/<int:pk>/', views.MenuItemByCategory.as_view()),
