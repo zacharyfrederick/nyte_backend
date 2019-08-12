@@ -33,7 +33,8 @@ def attempt_to_reload_balance(sender, **kwargs):
 def attempt_to_charge_transaction(sender, **kwargs):
         transaction = kwargs.get("instance")
         if transaction.is_data_formatted is False:
-                transaction.format_data()
+                #transaction.format_data()
+                pass
         if transaction.has_attempted_to_charge is not True:
                 transaction.attempt_to_charge()
         
