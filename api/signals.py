@@ -32,10 +32,10 @@ def attempt_to_reload_balance(sender, **kwargs):
 @receiver(pre_save, sender=models.Transaction)
 def attempt_to_charge_transaction(sender, **kwargs):
         transaction = kwargs.get("instance")
-        if transaction.has_attempted_to_charge is not True:
-                transaction.attempt_to_charge()
         if transaction.is_data_formatted is False:
                 transaction.format_data()
+        if transaction.has_attempted_to_charge is not True:
+                transaction.attempt_to_charge()
         
 @receiver(pre_save, sender=models.MenuItem)
 def set_default_convenience_fee(sender, **kwargs):
