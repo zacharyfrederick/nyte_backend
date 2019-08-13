@@ -32,7 +32,6 @@ class Transaction(models.Model):
     complete = models.DateTimeField(null=True, blank=True)
     canceled = models.DateTimeField(null=True, blank=True)
     cancel_reason = models.CharField(max_length=100, null=True, blank=True)
-    total = models.IntegerField(default=0, null=True)
     data = JSONField(null=True, blank=True)
     failure_code = models.CharField(max_length=50, blank=True, null=True, default="None")
     failure_message = models.CharField(max_length=100, blank=True, null=True, default="None")
@@ -42,6 +41,11 @@ class Transaction(models.Model):
     is_data_formatted = models.BooleanField(default=False, blank=True)
     tip = models.FloatField(default=0.0, blank=False)
     accepted = models.BooleanField(default=False, blank=True)
+    subtotal = models.IntegerField(default=0, null=True)
+    tax = models.IntegerField(default=0, null=True)
+    tip = models.IntegerField(default=0, null=True)
+
+
 
     STRIPE_ID_ERROR = "STRIPE_ID_ERROR"
     STRIPE_ID_ERROR_MESSAGE = "stripe_id does not exist for this user"
@@ -78,13 +82,14 @@ class Transaction(models.Model):
 
     def attempt_to_update_balance(self):
         if self.failure_code == "None":
-            self.user.account_balance = self.user.account_balance - self.total
+            self.user.account_balance = self.user.account_balance - (self.subtotal + self.tax + self.tip)
             self.accepted = True
             self.venue.update_bartender_devices();
             self.user.save()
 
     def check_if_balance_is_enough(self):
-        if self.user.account_balance < self.total:
+        total =  (self.subtotal + self.tax + self.tip)
+        if self.user.account_balance <  total:
             self.failure_code = self.INSUFFICIENT_BALANCE_ERROR
             self.failure_message = self.INSUFFICIENT_BALANCE_ERROR_MESSAGE
     
