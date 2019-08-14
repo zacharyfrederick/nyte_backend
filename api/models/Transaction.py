@@ -120,7 +120,7 @@ class Transaction(models.Model):
         elif self.status == "completed" and self.completed_notif_sent == False:
             self.notification_msg = "Your order is ready. Pick it up at the Nyte station."
             self.completed_notif_sent = True
-        elif self.status == "canceled" self.canceled_notif_sent == False:
+        elif self.status == "canceled" and self.canceled_notif_sent == False:
             self.notification_msg = "Your order was canceled"
             self.notification_status == 3
             self.canceled_notif_sent = True
