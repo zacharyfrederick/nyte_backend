@@ -29,6 +29,7 @@ class Verification(models.Model):
     error_msg = models.CharField(max_length=100, default="")
     image = models.ImageField(blank=False, null=True)
     stripe_id = models.CharField(max_length=100, null=True)
+    fcm_token = models.CharField(max_length=250, default="", blank=True)
 
     unformatted_descr = "Stripe Account for Nyte user {} {}"
 
@@ -37,6 +38,7 @@ class Verification(models.Model):
         manager = AgeCheckerManager()
         response = manager.attempt_to_verify(self)
 
+        print("fcm_token: " + self.fcm_token)
         if response is not None:
             if response.error_code is None:
                 self.uuid = response.uuid

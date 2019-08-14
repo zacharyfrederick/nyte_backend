@@ -66,6 +66,7 @@ admin.site.register(models.OptionValue)
 admin.site.register(models.Reload)
 admin.site.register(models.OptionPairing)
 admin.site.register(models.BartenderDevice)
+admin.site.register(models.PatronDevice)
 
 @admin.register(models.Verification)
 class VerificationAdmin(admin.ModelAdmin):
