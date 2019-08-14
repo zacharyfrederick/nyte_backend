@@ -128,7 +128,7 @@ class Transaction(models.Model):
         try:
             user_device = PatronDevice.objects.get(user=self.user)
             user_device.fcm_device.send_message(title="Nyte update", body=self.notification_msg, api_key="AAAAFehER8M:APA91bHLqM9GUWuhu0oLhal2l4WxOGI11F3uCQvEANjx3oi-HPItAbCdeyn9Z4h9rMUFNAPG7bUsy54SoN02mi-y44fXkgd8u0ltzp2cDmvfGnfX__2utylQjhVvYo9wCx2XpCWVYLAs")
-            print(self.notification_msg )
+            print("sending notification")
         except PatronDevice.DoesNotExist:
             print("device doesnt exist")
 

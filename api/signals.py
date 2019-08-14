@@ -40,6 +40,7 @@ def attempt_to_charge_transaction(sender, **kwargs):
 
         transaction.check_for_status_updates()
 
+
 @receiver(pre_save, sender=models.MenuItem)
 def set_default_convenience_fee(sender, **kwargs):
         menu_item = kwargs.get("instance")
