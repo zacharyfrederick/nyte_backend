@@ -46,7 +46,9 @@ class Transaction(models.Model):
     subtotal = models.IntegerField(default=0, null=True)
     tax = models.IntegerField(default=0, null=True)
     tip = models.IntegerField(default=0, null=True)
-    notification_status = models.IntegerField(default=0, blank=True)
+    in_progress_notif_sent = models.BooleanField(default=False, blank=True)
+    completed_notif_sent = models.BooleanField(default=False, blank=True)
+    canceled_notif_sent = models.BooleanField(default=False, blank=True)
 
 
 
@@ -111,14 +113,17 @@ class Transaction(models.Model):
             self.failure_message = "Could not parse order data"
 
     def check_for_status_updates(self):
-        if self.status == "in progress":
+        if self.status == "in progress" and self.in_progress_notif_sent == False:
             self.notification_msg = "Your order is in progress!"
+            self.in_progress_notif_sent == True
             self.notification_status = 1
-        elif self.status == "completed":
+        elif self.status == "completed" and self.completed_notif_sent == False:
             self.notification_msg = "Your order is ready. Pick it up at the Nyte station."
-        elif self.status == "canceled":
+            self.completed_notif_sent = True
+        elif self.status == "canceled" self.canceled_notif_sent == False:
             self.notification_msg = "Your order was canceled"
             self.notification_status == 3
+            self.canceled_notif_sent = True
         else:
             return
         

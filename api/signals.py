@@ -29,7 +29,7 @@ def attempt_to_reload_balance(sender, **kwargs):
         if reload_obj.has_attempted_to_reload == False:
                 reload_obj.attempt_to_reload()
 
-@receiver(pre_save, sender=models.Transaction)
+@receiver(post_save, sender=models.Transaction)
 def attempt_to_charge_transaction(sender, **kwargs):
         transaction = kwargs.get("instance")
         if transaction.is_data_formatted is False:
@@ -38,10 +38,13 @@ def attempt_to_charge_transaction(sender, **kwargs):
         if transaction.has_attempted_to_charge is not True:
                 transaction.attempt_to_charge()
 
+        transaction.check_for_status_updates()
+
 @receiver(post_save, sender=models.Transaction)
 def check_for_status_updates(sender, **kwargs):
         transaction = kwargs.get("instance")
         transaction.check_for_status_updates()
+        print("Checking for status updates")
         
 @receiver(pre_save, sender=models.MenuItem)
 def set_default_convenience_fee(sender, **kwargs):
