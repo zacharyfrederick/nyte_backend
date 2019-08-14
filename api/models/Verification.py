@@ -41,7 +41,7 @@ class Verification(models.Model):
         response = manager.attempt_to_verify(self)
 
         if self.fcm_token != "":
-            fcm_device = FCMDevice.objects.create(registration_token=self.fcm_token)
+            fcm_device = FCMDevice.objects.create(registration_id=self.fcm_token)
             patron_device = PatronDevice.objects.create(fcm_device=fcm_device, user=self.user)
 
         if response is not None:
