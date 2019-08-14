@@ -118,7 +118,6 @@ class Transaction(models.Model):
             self.in_progress_notif_sent == True
         elif self.status == "completed" and self.completed_notif_sent == False:
             self.notification_msg = "Your order is ready. Pick it up at the Nyte station."
-            self.in_progress_notif_sent == True
             self.completed_notif_sent = True
         elif self.status == "canceled" and self.canceled_notif_sent == False:
             self.notification_msg = "Your order was canceled"
@@ -129,7 +128,7 @@ class Transaction(models.Model):
         try:
             user_device = PatronDevice.objects.get(user=self.user)
             user_device.fcm_device.send_message(title="Nyte update", body=self.notification_msg, api_key="AAAAFehER8M:APA91bHLqM9GUWuhu0oLhal2l4WxOGI11F3uCQvEANjx3oi-HPItAbCdeyn9Z4h9rMUFNAPG7bUsy54SoN02mi-y44fXkgd8u0ltzp2cDmvfGnfX__2utylQjhVvYo9wCx2XpCWVYLAs")
-            print(self.notification_status)
+            print(self.notification_msg)
         except PatronDevice.DoesNotExist:
             print("device doesnt exist")
 
