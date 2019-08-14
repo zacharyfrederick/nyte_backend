@@ -7,6 +7,8 @@ import datetime
 import django
 import json
 from .MenuItem import MenuItem
+from fcm_django.models import FCMDevice
+from .PatronDevice import PatronDevice
 
 class MenuItemHelper():
     def __init__(self, item_id, quantity):
@@ -106,4 +108,23 @@ class Transaction(models.Model):
         except Exception:
             self.failure_code = "DATA_ERROR"
             self.failure_message = "Could not parse order data"
+
+    def check_for_status_updates(self):
+        if self.status == "in progress":
+            self.notification_msg = "Your order is in progress!"
+        elif self.status == "completed":
+            self.notification_msg = "Your order is ready. Pick it up at the Nyte station."
+        elif self.status == "canceled":
+            self.notification_msg = "Your order was canceled"
+        else:
+            return
+        
+        try:
+            user_device = PatronDevice.objects.get(user=self.user)
+            user_device.fcm_device.send_message(title="Nyte update", body=self.notification_msg, api_key="AAAAFehER8M:APA91bHLqM9GUWuhu0oLhal2l4WxOGI11F3uCQvEANjx3oi-HPItAbCdeyn9Z4h9rMUFNAPG7bUsy54SoN02mi-y44fXkgd8u0ltzp2cDmvfGnfX__2utylQjhVvYo9wCx2XpCWVYLAs")
+        except PatronDevice.DoesNotExist:
+            print("device doesnt exist")
+
+        
+
         
