@@ -40,7 +40,8 @@ def attempt_to_charge_transaction(sender, **kwargs):
 
 @receiver(pre_save, sender=models.Transaction)
 def check_for_status_updates(sender, **kwargs):
-        transaction = kwargs.get("instance")
+        transaction_id = kwargs.get("instance").id
+        transaction = models.Transaction.objects.get(id=transaction_id)
         transaction.check_for_status_updates()
         print("Checking for status updates")
         
