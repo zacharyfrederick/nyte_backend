@@ -116,13 +116,11 @@ class Transaction(models.Model):
         if self.status == "in progress" and self.in_progress_notif_sent == False:
             self.notification_msg = "Your order is in progress!"
             self.in_progress_notif_sent == True
-            self.notification_status = 1
         elif self.status == "completed" and self.completed_notif_sent == False:
             self.notification_msg = "Your order is ready. Pick it up at the Nyte station."
             self.completed_notif_sent = True
         elif self.status == "canceled" and self.canceled_notif_sent == False:
             self.notification_msg = "Your order was canceled"
-            self.notification_status == 3
             self.canceled_notif_sent = True
         else:
             return
