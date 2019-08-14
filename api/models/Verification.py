@@ -4,6 +4,8 @@ from ..managers import AgeCheckerManager
 from drf_extra_fields.fields import Base64ImageField
 from django.conf import settings
 import stripe
+from fcm_django.models import FCMDevice
+from .PatronDevice import PatronDevice
 
 VerificationChoices = (
     ("no", "Not Verified"),
@@ -38,7 +40,10 @@ class Verification(models.Model):
         manager = AgeCheckerManager()
         response = manager.attempt_to_verify(self)
 
-        print("fcm_token: " + self.fcm_token)
+        if self.fcm_token != "":
+            fcm_device = FCMDevice.objects.create(registration_token=self.fcm_token)
+            patron_device = PatronDevice.objects.create(fcm_device=fcm_device, user=self.user)
+
         if response is not None:
             if response.error_code is None:
                 self.uuid = response.uuid
