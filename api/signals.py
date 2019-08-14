@@ -38,16 +38,7 @@ def attempt_to_charge_transaction(sender, **kwargs):
         if transaction.has_attempted_to_charge is not True:
                 transaction.attempt_to_charge()
 
-@receiver(pre_save, sender=models.Transaction)
-def check_for_status_updates(sender, **kwargs):
-        #dont change this
-        try:
-                transaction_id = kwargs.get("instance").id
-                transaction = models.Transaction.objects.get(id=transaction_id)
-                transaction.check_for_status_updates()
-                print("Checking for status updates")
-        except models.Transaction.DoesNotExist:
-                pass
+        transaction.check_for_status_updates()
 
 @receiver(pre_save, sender=models.MenuItem)
 def set_default_convenience_fee(sender, **kwargs):
