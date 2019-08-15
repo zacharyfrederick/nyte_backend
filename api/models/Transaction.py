@@ -9,7 +9,7 @@ import json
 from .MenuItem import MenuItem
 from fcm_django.models import FCMDevice
 from .PatronDevice import PatronDevice
-from django.signals import pre_save
+from django.db.models.signals import pre_save
 
 class MenuItemHelper():
     def __init__(self, item_id, quantity):
