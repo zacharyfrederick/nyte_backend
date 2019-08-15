@@ -33,6 +33,7 @@ class TransactionUpdate(APIView):
             self.update_status()
             self.get_canceled_reason()
             self.update_status()
+            self.transaction.check_for_status_updates()
         except KeyError:
             return Response({"error": "you did not submit the proper attributes"})
         except json.JSONDecodeError:
