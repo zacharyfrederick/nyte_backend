@@ -18,10 +18,39 @@ from django.urls import path, include
 from rest_framework.authtoken import views as drf_views
 from django.conf import settings
 from django.conf.urls.static import static
+from api.views import NyteUserViewset, UserReloadsViewset, UserOrdersViewset, VenueViewset, VenueMenuItemViewset, VenueOptionsViewset, VenueOrdersViewset, VenueTransactionsViewsets
+from rest_framework_nested import routers as nested_routers
+
+user_router = nested_routers.DefaultRouter()
+user_router.register("users", NyteUserViewset)
+user_reload_router = nested_routers.NestedDefaultRouter(user_router, 'users', lookup='users')
+user_reload_router.register('reloads', UserReloadsViewset, base_name="user-reloads")
+user_orders_router = nested_routers.NestedDefaultRouter(user_router, 'users', lookup='users')
+user_orders_router.register('orders', UserOrdersViewset, base_name='UserOrdersViewset')
+
+venue_router = nested_routers.DefaultRouter()
+venue_router.register('venues', VenueViewset)
+venue_menu_item_router = nested_routers.NestedDefaultRouter(venue_router, 'venues', lookup='venues')
+venue_menu_item_router.register("menu-items", VenueMenuItemViewset, base_name="venue-menu-items")
+venue_options_router = nested_routers.NestedDefaultRouter(venue_router, 'venues', lookup='venues')
+venue_options_router.register("options", VenueOptionsViewset, base_name="venue-options")
+venue_orders_router = nested_routers.NestedDefaultRouter(venue_router, 'venues', lookup='venues')
+venue_orders_router.register("orders", VenueOrdersViewset, base_name="venue-orders")
+venue_orders_router = nested_routers.NestedDefaultRouter(venue_router, 'venues', lookup='venues')
+venue_orders_router.register("transactions", VenueTransactionsViewsets, base_name="venue-transactions")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls'))
+    path('api/', include('api.urls')),
+    path("api/v1/", include(user_router.urls)),
+    path("api/v1/", include(user_reload_router.urls)),
+    path("api/v1/", include(user_orders_router.urls)),
+    path("api/v1/", include(venue_router.urls)),
+    path("api/v1/", include(venue_menu_item_router.urls)),
+    path("api/v1/", include(venue_options_router.urls)),
+    path("api/v1/", include(venue_orders_router.urls)),
 ]
+
+
 
 #urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

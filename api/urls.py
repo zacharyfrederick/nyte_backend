@@ -49,5 +49,5 @@ urlpatterns = [
     path('MenuItemsByVenue/<int:pk>/', views.MenuItemsByVenue.as_view()),
     path('Options/', views.OptionList.as_view()),
     path('Options/<int:pk>/', views.OptionListByVenue.as_view()),
-    path('Orders/<int:pk>/', views.OpenTransactionsByVenue.as_view())
+    path('Orders/<int:pk>/', views.OpenTransactionsByVenue.as_view()),
 ]
