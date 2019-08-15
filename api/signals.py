@@ -38,11 +38,8 @@ def attempt_to_charge_transaction(sender, **kwargs):
         if transaction.has_attempted_to_charge is not True:
                 transaction.attempt_to_charge()
 
-
 @receiver(pre_save, sender=models.Transaction)
-def attempt_to_charge_transaction(sender, **kwargs):
-        print("pre save being called")
-        print(inspect.currentframe())
+def check_for_status_updates(sender, **kwargs):
         transaction = kwargs.get("instance")
         transaction.check_for_status_updates()
 
