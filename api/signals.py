@@ -33,20 +33,15 @@ def attempt_to_reload_balance(sender, **kwargs):
 def attempt_to_charge_transaction(sender, **kwargs):
         print("Post save being called")
         transaction = kwargs.get("instance")
-        if transaction.is_data_formatted is False:
-                #transaction.format_data()
-                pass
+
         if transaction.has_attempted_to_charge is not True:
                 transaction.attempt_to_charge()
-
-        transaction.check_for_status_updates()
 
 
 @receiver(pre_save, sender=models.Transaction)
 def attempt_to_charge_transaction(sender, **kwargs):
         print("pre save being called")
         transaction = kwargs.get("instance")
-
         transaction.check_for_status_updates()
 
 @receiver(pre_save, sender=models.MenuItem)
