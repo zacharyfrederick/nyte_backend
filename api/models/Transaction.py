@@ -11,6 +11,7 @@ from fcm_django.models import FCMDevice
 from .PatronDevice import PatronDevice
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
+from time import time
 
 class MenuItemHelper():
     def __init__(self, item_id, quantity):
@@ -140,4 +141,4 @@ def attempt_to_charge_transaction(sender, **kwargs):
         transaction = kwargs.get("instance")
         transaction.check_for_status_updates()
 
-pre_save.connect(attempt_to_charge_transaction, sender=Transaction, dispatch_uid="transaction.signal")
+pre_save.connect(attempt_to_charge_transaction, sender=Transaction, dispatch_uid=time())
