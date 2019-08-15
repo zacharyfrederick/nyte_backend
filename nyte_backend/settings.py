@@ -197,8 +197,7 @@ STRIPE_SECRET_KEY = "sk_test_DjOGG9xXc9hKkm15WpoNOntz00LBttlsdL"
 
 FCM_DJANGO_SETTINGS = {
 
-        "FCM_SERVER_KEY": "AAAAv4Tr6Zc:APA91bG20VhoPZhDvMhYWbjNE3RwO7Coxx-EhPTez2lEsz3JOAsa14q5X9Hxpr57ZLtXcfj7-gfWV1AXy5HfdcdmM6emK5tA-GyfrPoysFCHMpK_dmcbhz_iAGyAxDSh7NarrtDGY2W2",
-         # true if you want to have only one active device per registered user at a time
+        "FCM_SERVER_KEY": "AAAAFehER8M:APA91bHLqM9GUWuhu0oLhal2l4WxOGI11F3uCQvEANjx3oi-HPItAbCdeyn9Z4h9rMUFNAPG7bUsy54SoN02mi-y44fXkgd8u0ltzp2cDmvfGnfX__2utylQjhVvYo9wCx2XpCWVYLAs",
          # default: False
         "ONE_DEVICE_PER_USER": True,
          # devices to which notifications cannot be sent,
