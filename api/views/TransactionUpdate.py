@@ -3,6 +3,7 @@ import json
 
 #django imports
 from django.views.decorators.csrf import csrf_exempt
+from django.utils.timezone import now
 import django
 
 #DRF imports
@@ -34,6 +35,7 @@ class TransactionUpdate(APIView):
             self.get_canceled_reason()
             self.update_status()
             self.transaction.check_for_status_updates()
+            self.transaction.save()
         except KeyError:
             return Response({"error": "you did not submit the proper attributes"})
         except json.JSONDecodeError:
@@ -63,16 +65,15 @@ class TransactionUpdate(APIView):
     def update_status(self):
         self.transaction.status = self.status
         self.update_times_if_necessary()
-        self.transaction.save()
 
     def update_times_if_necessary(self):
         if self.status == "canceled":
             if self.canceled_reason is not None:
                 self.transaction.cancel_reason = self.canceled_reason
-                self.transaction.canceled = datetime.datetime.now()
+                self.transaction.canceled = now()
                 return
         if self.status == "completed":
-            self.transaction.ready = datetime.datetime.now()
+            self.transaction.ready = now()
             return 
         if self.status == "picked up":
-            self.transaction.complete = datetime.datetime.now()
+            self.transaction.complete = now()

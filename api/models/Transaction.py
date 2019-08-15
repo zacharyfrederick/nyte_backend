@@ -116,13 +116,13 @@ class Transaction(models.Model):
             self.failure_message = "Could not parse order data"
 
     def check_for_status_updates(self):
-        if self.status == "in progress":
+        if self.status == "in progress" and self.in_progress_notif_sent == False:
             self.notification_msg = "Your order is in progress!"
-            self.in_progress_notif_sent == True
-        elif self.status == "completed":
+            self.in_progress_notif_sent = True
+        elif self.status == "completed" and self.completed_notif_sent == False:
             self.notification_msg = "Your order is ready. Pick it up at the Nyte station."
             self.completed_notif_sent = True
-        elif self.status == "canceled":
+        elif self.status == "canceled" and self.canceled_notif_sent == False:
             self.notification_msg = "Your order was canceled"
             self.canceled_notif_sent = True
         else:
