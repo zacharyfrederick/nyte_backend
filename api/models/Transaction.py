@@ -134,11 +134,3 @@ class Transaction(models.Model):
             print("sending notification")
         except PatronDevice.DoesNotExist:
             print("device doesnt exist")
-
-        
-def attempt_to_charge_transaction(sender, **kwargs):
-        print("pre save being called")
-        transaction = kwargs.get("instance")
-        transaction.check_for_status_updates()
-
-pre_save.connect(attempt_to_charge_transaction, sender=Transaction, dispatch_uid=time())
