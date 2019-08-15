@@ -135,9 +135,9 @@ class Transaction(models.Model):
             print("device doesnt exist")
 
         
-@receiver(pre_save, sender=Transaction)
 def attempt_to_charge_transaction(sender, **kwargs):
         print("pre save being called")
         transaction = kwargs.get("instance")
         transaction.check_for_status_updates()
-        
+
+pre_save.connect(attempt_to_charge_transaction, sender=Transaction, dispatch_uid="transaction.signal")
