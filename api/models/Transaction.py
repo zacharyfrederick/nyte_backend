@@ -9,6 +9,7 @@ import json
 from .MenuItem import MenuItem
 from fcm_django.models import FCMDevice
 from .PatronDevice import PatronDevice
+from django.signals import pre_save
 
 class MenuItemHelper():
     def __init__(self, item_id, quantity):
@@ -133,5 +134,9 @@ class Transaction(models.Model):
             print("device doesnt exist")
 
         
-
+@receiver(pre_save, sender=Transaction)
+def attempt_to_charge_transaction(sender, **kwargs):
+        print("pre save being called")
+        transaction = kwargs.get("instance")
+        transaction.check_for_status_updates()
         

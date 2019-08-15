@@ -37,12 +37,6 @@ def attempt_to_charge_transaction(sender, **kwargs):
         if transaction.has_attempted_to_charge is not True:
                 transaction.attempt_to_charge()
 
-def attempt_to_charge_transaction(sender, **kwargs):
-        print("pre save being called")
-        transaction = kwargs.get("instance")
-        transaction.check_for_status_updates()
-pre_save.connect(attempt_to_charge_transaction, dispatch_uid="some.unique.id")
-
 
 @receiver(pre_save, sender=models.MenuItem)
 def set_default_convenience_fee(sender, **kwargs):
