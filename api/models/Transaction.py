@@ -130,7 +130,7 @@ class Transaction(models.Model):
         
         try:
             user_device = PatronDevice.objects.get(user=self.user)
-            user_device.fcm_device.send_message(title="Nyte update", body=self.notification_msg)
+            print(user_device.fcm_device.send_message(title="Nyte update", body=self.notification_msg))
             print("sending notification")
         except PatronDevice.DoesNotExist:
             print("device doesnt exist")
