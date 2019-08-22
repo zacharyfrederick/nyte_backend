@@ -29,7 +29,7 @@ class MenuItemHelper():
         return { "id": self.item_id, "quantity": self.quantity, "name" : self.name, "price": self.price, "convenience_fee" : self.convenience_fee}
 
 class Transaction(models.Model):
-    user = models.ForeignKey(NyteUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(NyteUser, on_delete=models.CASCADE, related_name='user')
     venue = models.ForeignKey(Venue, on_delete=models.CASCADE)
     status = models.CharField(max_length=100, null=False, blank=True, default="submitted")
     placed = models.DateTimeField(null=True, blank=True, default=django.utils.timezone.now)

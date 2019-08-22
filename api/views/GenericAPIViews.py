@@ -192,4 +192,4 @@ class OpenTransactionsByVenue(generics.ListAPIView):
     serializer_class = serializers.TransactionSerializer
 
     def get_queryset(self):
-        return models.Transaction.objects.filter(venue=self.kwargs['pk']).exclude(status="completed").exclude(status="canceled")
+        return models.Transaction.objects.filter(venue=self.kwargs['pk']).exclude(status="completed").exclude(status="canceled").exclude(status="picked up")

@@ -6,6 +6,11 @@ class NyteUserSerializer(serializers.ModelSerializer):
         model = models.NyteUser
         exclude = ("password",)
 
+class NyteUserStrippedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.NyteUser
+        fields = ("id", "first_name", "last_name", "id_image")
+
 class VenueSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Venue
@@ -38,6 +43,7 @@ class IdentitySerializer(serializers.ModelSerializer):
 
 class TransactionSerializer(serializers.ModelSerializer):
     venue_name = serializers.SerializerMethodField()
+    user = NyteUserStrippedSerializer()
 
     class Meta:
         model = models.Transaction
