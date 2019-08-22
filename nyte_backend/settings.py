@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'drf_extra_fields',
     'storages',
     'fcm_django',
-    'drf_yasg',
 ]
 
 MIDDLEWARE = [
