@@ -36,7 +36,7 @@ class NyteUserAdmin(UserAdmin):
         'membership', 
         'is_verified',
         'stripe_id',
-        'default_payment','account_balance')}),
+        'default_payment','account_balance','dob_day', 'dob_year', 'dob_month')}),
         ('Permissions', {'fields': ('is_staff', 'is_active')}),
     )
     add_fieldsets = (

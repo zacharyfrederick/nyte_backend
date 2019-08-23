@@ -52,7 +52,7 @@ class Transaction(models.Model):
     in_progress_notif_sent = models.BooleanField(default=False, blank=True)
     completed_notif_sent = models.BooleanField(default=False, blank=True)
     canceled_notif_sent = models.BooleanField(default=False, blank=True)
-
+    card_details = models.CharField(max_length=50, default="")
 
 
     STRIPE_ID_ERROR = "STRIPE_ID_ERROR"

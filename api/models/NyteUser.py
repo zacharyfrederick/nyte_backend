@@ -21,6 +21,11 @@ class NyteUser(AbstractUser):
     NO_DEFAULT_PAYMENT = "None"
     STRIPE_ID_DOES_NOT_EXIST = "None"
 
+    username = None
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
     dob_day = models.CharField(max_length=100, default="")
     dob_month = models.CharField(max_length=100, default="")
     dob_year = models.CharField(max_length=100, default="")
@@ -46,13 +51,12 @@ class NyteUser(AbstractUser):
     account_balance = models.IntegerField(null=True, default=0)
     default_payment = models.CharField(max_length=100, null=True, default=NO_DEFAULT_PAYMENT)
 
-    username = None
-
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
 
     objects = NyteUserManager()
 
+    class meta:
+        unique_together = ('addr', 'first_name', 'last_name', 'dob_day', 'dob_month', 'dob_year' )
+        
     def login_json_response(self, access_token):
         token = Token.objects.get(user=self.id)
         return JsonResponse({

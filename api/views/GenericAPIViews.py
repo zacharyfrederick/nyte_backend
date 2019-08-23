@@ -1,7 +1,6 @@
 #DRF imports
 from rest_framework import generics
 from rest_framework.parsers import FileUploadParser
-
 #Nyte imports
 from .. import models
 from .. import serializers
@@ -155,6 +154,7 @@ class CategoryCreate(generics.CreateAPIView):
 
 class MenuItemByCategory(generics.ListAPIView):
     serializer_class = serializers.MenuItemSerializer
+    pagination_class = None
 
     def get_queryset(self):
         return models.MenuItem.objects.filter(category=self.kwargs['pk'])
