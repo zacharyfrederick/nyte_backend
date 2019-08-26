@@ -10,3 +10,8 @@ api/models/__pycache__/
 api/migrations/__pycache__/
 venv/
 *.jpg
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
