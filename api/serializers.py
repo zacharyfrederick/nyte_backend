@@ -43,7 +43,7 @@ class IdentitySerializer(serializers.ModelSerializer):
 
 class TransactionSerializer(serializers.ModelSerializer):
     venue_name = serializers.SerializerMethodField()
-    user = NyteUserStrippedSerializer()
+    user_data = serializers.SerializerMethodField()
 
     class Meta:
         model = models.Transaction
@@ -51,6 +51,9 @@ class TransactionSerializer(serializers.ModelSerializer):
 
     def get_venue_name(self, obj):
         return obj.venue.name 
+
+    def get_user_data(self, obj):
+        return {"first_name": obj.user.first_name, "last_name": obj.user.last_name}
         
 class WorksAtSerializer(serializers.ModelSerializer):
     class Meta:
