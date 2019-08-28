@@ -18,7 +18,7 @@ class MenuItem(models.Model):
     category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE)
     price = models.FloatField(default=0.0, null=True, blank=True)
     convenience_fee = models.FloatField(null=True, blank=True, default=-1.0);
-    image = models.ImageField(upload_to="images/",blank=True, null=True)
+    image = models.ImageField(upload_to="menu_items/",blank=True, null=True)
 
     def __str__(self):
         return self.name

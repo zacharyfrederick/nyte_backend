@@ -53,6 +53,7 @@ class TransactionSerializer(serializers.ModelSerializer):
         return obj.venue.name 
 
     def get_user_data(self, obj):
+        print(obj.user.id_image)
         return {"first_name": obj.user.first_name, "last_name": obj.user.last_name}
         
 class WorksAtSerializer(serializers.ModelSerializer):

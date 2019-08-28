@@ -9,7 +9,7 @@ class Venue(models.Model):
     price_level = models.CharField(max_length=50, blank=True, null=True)
     crowd_size = models.CharField(max_length=50, blank=True, null=True)
     tagline = models.CharField(max_length=100, blank=False, null=True)
-    image = models.CharField(max_length=100) #TODO: install pillow and change to image field
+    image = models.ImageField(upload_to="venues/", null=True, default=None) #TODO: install pillow and change to image field
     markup_fee = models.FloatField(null=True, blank=True)
     sales_tax = models.FloatField(null=True, blank=True, default=6.0); #represents a 6% sales sax
     convenience_fee = models.FloatField(null=True, blank=True, default=0.5);
