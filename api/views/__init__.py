@@ -11,3 +11,4 @@ from .venue_menu_items import VenueMenuItemViewset
 from .venue_options import VenueOptionsViewset
 from .venue_orders import VenueOrdersViewset
 from .venue_transactions import VenueTransactionsViewsets
+from .venue_images import VenueImagesViewset

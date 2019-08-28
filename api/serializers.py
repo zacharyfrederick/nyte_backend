@@ -142,3 +142,8 @@ class MenuItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.MenuItem
         fields = "__all__"
+
+class VenueImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.MenuItem
+        fields = "__all__"

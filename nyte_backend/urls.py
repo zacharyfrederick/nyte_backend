@@ -18,7 +18,7 @@ from django.urls import path, include
 from rest_framework.authtoken import views as drf_views
 from django.conf import settings
 from django.conf.urls.static import static
-from api.views import NyteUserViewset, UserReloadsViewset, UserOrdersViewset, VenueViewset, VenueMenuItemViewset, VenueOptionsViewset, VenueOrdersViewset, VenueTransactionsViewsets
+from api.views import NyteUserViewset, UserReloadsViewset, UserOrdersViewset, VenueViewset, VenueMenuItemViewset, VenueOptionsViewset, VenueOrdersViewset, VenueTransactionsViewsets, VenueImagesViewset
 from rest_framework_nested import routers as nested_routers
 from rest_framework import permissions
 
@@ -41,6 +41,8 @@ venue_orders_router = nested_routers.NestedDefaultRouter(venue_router, 'venues',
 venue_orders_router.register("orders", VenueOrdersViewset, base_name="venue-orders")
 venue_transactions_router = nested_routers.NestedDefaultRouter(venue_router, 'venues', lookup='venues')
 venue_transactions_router.register("transactions", VenueTransactionsViewsets, base_name="venue-transactions")
+venue_images_router = nested_routers.NestedDefaultRouter(venue_router, 'venues', lookup='venues')
+venue_images_router.register('images', VenueImagesViewset, base_name="venue-images")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -54,4 +56,5 @@ urlpatterns = [
     path("api/v1/", include(venue_options_router.urls)),
     path("api/v1/", include(venue_orders_router.urls)),
     path("api/v1/", include(venue_transactions_router.urls)),
+    path("api/v1/", include(venue_images_router.urls))
 ]

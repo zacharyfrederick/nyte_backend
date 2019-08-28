@@ -67,6 +67,7 @@ admin.site.register(models.Reload)
 admin.site.register(models.OptionPairing)
 admin.site.register(models.BartenderDevice)
 admin.site.register(models.PatronDevice)
+admin.site.register(models.VenueImage)
 
 @admin.register(models.Verification)
 class VerificationAdmin(admin.ModelAdmin):
@@ -83,6 +84,6 @@ class ProtoOrderAdmin(admin.ModelAdmin):
 
 @admin.register(models.Venue)
 class VenueAdmin(admin.ModelAdmin):
-    list_display = ("name", "music_type", "price_level", "crowd_size", "tagline", "markup_fee")
-    search_fields = ("name", "music_type", "tagline", "description")
+    list_display = ("name", "music_type", "markup_fee", 'minimum_age')
+    search_fields = ("name", "music_type", "description")
     

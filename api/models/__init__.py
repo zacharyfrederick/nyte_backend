@@ -21,3 +21,4 @@ from .OptionValuePair import OptionValuePair
 from .OptionPairing import OptionPairing
 from .BartenderDevice import BartenderDevice
 from .PatronDevice import PatronDevice
+from .VenueImage import VenueImage
