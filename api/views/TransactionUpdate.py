@@ -15,6 +15,8 @@ from ..managers import FacebookManager
 from .. import models
 import datetime
 
+from twilio.base.exceptions import TwilioRestException
+
 
 class UnacceptableStatusError(Exception):
     pass
@@ -44,6 +46,8 @@ class TransactionUpdate(APIView):
             return Response({"error": "no transaction with that id"})
         except UnacceptableStatusError:
             return Response({"error": "an unacceptable response was sent in"})
+        except TwilioRestException:
+            return Response({"error": "There was an error sending a text notification"})
         return Response({"success": "transaction updated sucessfully"})
 
     def get_parameters(self, request):

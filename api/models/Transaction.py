@@ -2,7 +2,7 @@ from django.db import models
 from .NyteUser import NyteUser
 from .Venue import Venue
 from django.contrib.postgres.fields import JSONField
-from ..managers import Stripe_Manager
+from ..managers import Stripe_Manager, TwilioManager
 import datetime 
 import django
 import json
@@ -116,6 +116,7 @@ class Transaction(models.Model):
             self.failure_message = "Could not parse order data"
 
     def check_for_status_updates(self):
+        print("in here")
         if self.status == "in progress" and self.in_progress_notif_sent == False:
             self.notification_msg = "Your order is in progress!"
             self.in_progress_notif_sent = True
@@ -126,11 +127,16 @@ class Transaction(models.Model):
             self.notification_msg = "Your order was canceled"
             self.canceled_notif_sent = True
         else:
+            print("returning")
             return
-        
         try:
+            print("first try")
             user_device = PatronDevice.objects.get(user=self.user)
             print(user_device.fcm_device.send_message(title="Nyte update", body=self.notification_msg, data={"id": self.id}))
             print("sending notification")
         except PatronDevice.DoesNotExist:
-            print("device doesnt exist")
+                print("second try")
+                twilio = TwilioManager()
+                twilio.send_msg(self.user.phone, "Order is ready")
+                print("device doesnt exist. Sending text notification")
+           
