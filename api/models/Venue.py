@@ -21,5 +21,5 @@ class Venue(models.Model):
         for device in devices:
             print("firing message to bartender device")
             fcm_device = device.device
-            fcm_device.send_message(title="New Order", body="A new order was submitted", api_key="AAAAv4Tr6Zc:APA91bG20VhoPZhDvMhYWbjNE3RwO7Coxx-EhPTez2lEsz3JOAsa14q5X9Hxpr57ZLtXcfj7-gfWV1AXy5HfdcdmM6emK5tA-GyfrPoysFCHMpK_dmcbhz_iAGyAxDSh7NarrtDGY2W2")
+            print(fcm_device.send_message(title="New Order", body="A new order was submitted", api_key="AAAAv4Tr6Zc:APA91bG20VhoPZhDvMhYWbjNE3RwO7Coxx-EhPTez2lEsz3JOAsa14q5X9Hxpr57ZLtXcfj7-gfWV1AXy5HfdcdmM6emK5tA-GyfrPoysFCHMpK_dmcbhz_iAGyAxDSh7NarrtDGY2W2"))
             
