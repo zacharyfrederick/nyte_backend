@@ -163,7 +163,7 @@ class OpenTransactions(generics.ListAPIView):
     serializer_class = serializers.TransactionSerializer
 
     def get_queryset(self):
-        return models.Transaction.objects.all().exclude(status="completed").exclude(status="canceled");
+        return models.Transaction.objects.all().exclude(status="picked up").exclude(status="canceled");
 
 class MenuItemsByVenue(generics.ListAPIView):
     serializer_class = serializers.MenuItemSerializer
