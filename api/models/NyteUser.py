@@ -74,6 +74,7 @@ class NyteUser(AbstractUser):
         self.dob_year = verification.dob_year
         self.email = verification.email
         self.stripe_id = verification.stripe_id
+        self.id_image = verification.image
         self.is_verified = True
         self.save()
     

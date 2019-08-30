@@ -29,7 +29,7 @@ class Verification(models.Model):
     attempted_to_verify = models.BooleanField(default=False)
     error_code = models.CharField(max_length=100, default="")
     error_msg = models.CharField(max_length=100, default="")
-    image = models.ImageField(blank=False, null=True)
+    image = models.ImageField(upload_to="users/", blank=False, null=True)
     stripe_id = models.CharField(max_length=100, null=True)
     fcm_token = models.CharField(max_length=250, default="", blank=True)
 
