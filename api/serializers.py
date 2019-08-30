@@ -53,8 +53,8 @@ class TransactionSerializer(serializers.ModelSerializer):
         return obj.venue.name 
 
     def get_user_data(self, obj):
-        print(obj.user.id_image)
-        return {"first_name": obj.user.first_name, "last_name": obj.user.last_name}
+        id_url = "https://nyte-assets.s3.amazonaws.com/media/{}".format(obj.user.id_image)
+        return {"first_name": obj.user.first_name, "last_name": obj.user.last_name, "id_url":id_url}
         
 class WorksAtSerializer(serializers.ModelSerializer):
     class Meta:
