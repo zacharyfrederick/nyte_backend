@@ -1,6 +1,7 @@
 from django.db import models
 from .BartenderDevice import BartenderDevice
 from fcm_django.models import FCMDevice
+from django.contrib.postgres.fields import JSONField
 
 class Venue(models.Model):
     name = models.CharField(max_length=200, null=False, blank=False)
@@ -8,9 +9,10 @@ class Venue(models.Model):
     music_type = models.CharField(max_length=100, blank=True, null=True)
     image = models.ImageField(upload_to="venues/", null=True, default=None) #TODO: install pillow and change to image field
     markup_fee = models.FloatField(null=True, blank=True)
-    sales_tax = models.FloatField(null=True, blank=True, default=6.0); #represents a 6% sales sax
-    convenience_fee = models.FloatField(null=True, blank=True, default=0.5);
+    sales_tax = models.FloatField(null=True, blank=True, default=6.0)
+    convenience_fee = models.FloatField(null=True, blank=True, default=0.5)
     minimum_age = models.IntegerField(default=21, blank=True)
+    hours_of_operation = JSONField(null=True)
     
     def __str__(self):
         return self.name;

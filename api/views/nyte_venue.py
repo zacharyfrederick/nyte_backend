@@ -27,6 +27,25 @@ class VenueViewset(viewsets.ModelViewSet):
             return Response({"status": "success"})
         except KeyError:
             return Response({"error":"fcm_token not provided"})
+        
+    @action(detail=True, methods=['get'])
+    def get_hours(self, request, **kwargs):
+        try: 
+            venue = self.get_object()
+            return Response({venue.name : venue.hours_of_operation})
+        except Exception as e:
+            return Response({"error": e})
+
+    @action(detail=True, methods=['post'])
+    def set_hours(self, request, **kwargs):
+        try:
+            venue = self.get_object()
+            new_hours = request.data('hours')
+            venue.hours_of_operation = new_hours
+        except KeyError:
+            return Response({"error": "required parameter not included"})
+        except Error:
+            return Response({"error": "object does not exist"})
             
 
 

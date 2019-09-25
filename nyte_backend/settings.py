@@ -107,7 +107,7 @@ if 'RDS_DB_NAME' in os.environ:
     }
 else:
     import dj_database_url
-    DATABASES['default'] = dj_database_url.config(default='postgres://zach:HelloEd12@localhost:5433/nyte', conn_max_age=600)
+    DATABASES['default'] = dj_database_url.config(default='postgres://zach:HelloEd12@localhost:5432/nyte', conn_max_age=600)
 
 
 
